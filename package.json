@@ -1,0 +1,32 @@
+{
+  "name": "portfolio-app",
+  "version": "1.0.0",
+  "description": "Mobile-first portfolio web app",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.1.1",
+    "jsdom": "^23.0.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.4",
+    "@vitest/ui": "^1.0.4",
+    "@vitest/coverage-v8": "^1.0.4"
+  }
+}

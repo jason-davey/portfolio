@@ -1,20 +1,23 @@
-# Dual-AI Development Methodology
+# Triple-AI Development Methodology
 
 ## Overview
-A collaborative approach where two AI systems work together on complex projects, each leveraging their unique strengths while maintaining seamless integration.
+A revolutionary collaborative approach where three AI systems work together on complex projects, each leveraging their unique strengths while maintaining seamless integration and real-time handoffs.
 
-## The Model: Claude Code + Voiceflow
+## The Model: Claude Code + Voiceflow + v0.dev
 
 ### Role Distribution
-- **Claude Code (Technical AI)**: Architecture, code implementation, testing, version control
+- **Claude Code (Technical AI)**: Architecture, code implementation, testing, version control, integration logic
 - **Voiceflow (Conversational AI)**: User experience flow, narrative guidance, interactive storytelling
-- **Human Designer**: Strategy, vision, content, integration decisions
+- **v0.dev (Visual AI)**: Rapid visual component creation using natural language prompts
+- **Human Designer**: Strategy, vision, content, integration decisions, AI orchestration
 
 ### Why This Works
-1. **Complementary Strengths**: Technical precision meets conversational engagement
-2. **Parallel Development**: Both AI systems can work simultaneously on their domains  
-3. **Continuous Integration**: Real-time handoffs create seamless user experience
+1. **Complementary Strengths**: Technical precision + conversational engagement + visual iteration
+2. **Parallel Development**: All three AI systems can work simultaneously on their domains  
+3. **Continuous Integration**: Real-time handoffs create seamless user experience across all modalities
 4. **Scalable Complexity**: Each AI handles what it's best at, reducing overall complexity
+5. **Rapid Iteration**: Visual components can be redesigned in minutes using natural language
+6. **Automated Testing**: Integration points between all AI systems are automatically validated
 
 ## Core Principles
 
@@ -43,41 +46,77 @@ A collaborative approach where two AI systems work together on complex projects,
 ### Phase 1: Foundation
 ```
 Human: Defines vision and requirements
-Claude Code: Sets up technical architecture
+Claude Code: Sets up technical architecture and integration framework
 Voiceflow: Designs conversation flows  
-Integration: Maps conversation nodes to technical components
+v0.dev: Creates initial visual component concepts
+Integration: Maps conversation nodes to visual components
 ```
 
 ### Phase 2: Development
 ```
-Claude Code: Builds React components with integration hooks
-Voiceflow: Creates detailed conversation paths
-Testing: Simulates full user journeys
-Validation: Ensures seamless AI-to-AI handoffs
+Claude Code: Builds integration hooks and testing framework
+Voiceflow: Creates detailed conversation paths with visual triggers
+v0.dev: Generates components using natural language prompts
+Testing: Simulates full user journeys across all AI systems
+Validation: Ensures seamless triple-AI handoffs
 ```
 
 ### Phase 3: Integration
 ```
-API Layer: Real-time communication between AI systems
-User Testing: Validates end-to-end experience
-Refinement: Adjusts both conversation and technical elements
-Deployment: Coordinated release of both systems
+API Layer: Real-time communication between all three AI systems
+Component Import: Automated v0.dev component integration
+User Testing: Validates end-to-end experience across modalities
+Refinement: Adjusts conversation, visual, and technical elements
+Deployment: Coordinated release of all AI systems
+```
+
+### Phase 4: Iteration (New)
+```
+Visual Iteration: Rapid component redesign in v0.dev
+Conversation Updates: Voiceflow flow adjustments
+Technical Enhancement: Claude Code integration improvements
+Automated Testing: Continuous validation of all integration points
+Performance Optimization: Cross-AI system performance tuning
 ```
 
 ## Technical Patterns
 
-### Event-Driven Integration
+### Triple-AI Event-Driven Integration
 ```typescript
-// Voiceflow triggers React component
-window.dispatchEvent(new CustomEvent('voiceflow-visual-trigger', {
-  detail: { componentId: 'show_prototype', props: { animated: true }}
-}))
-
-// React informs Voiceflow of user action
-sendToVoiceflow('user_clicked_project', { 
-  projectId: 'mobile-app',
-  interest: 'technical_details' 
+// Voiceflow triggers v0.dev component
+useVoiceflowVisualTrigger('show_mobile_prototype', (props) => {
+  setActiveV0Component('MobileAppPrototype')
+  setComponentProps(props)
 })
+
+// v0.dev component sends interaction back to Voiceflow
+onInteraction?.('user_clicked_cta', {
+  componentId: 'mobile-prototype',
+  action: 'request_more_projects'
+})
+
+// Claude Code manages integration and testing
+V0Integration.registerComponent({
+  id: 'mobile-app-prototype',
+  adventurePaths: ['build-ship'],
+  voiceflowTriggers: ['show_mobile_prototype']
+})
+```
+
+### v0.dev Component Integration Pattern
+```typescript
+// Natural language design in v0.dev
+"Create an interactive mobile app prototype showcase"
+
+// Automated import via Claude Code
+npm run v0:import
+
+// Automatic integration with adventure context
+interface V0ComponentProps {
+  adventureContext?: AdventureContext
+  voiceflowContext?: VoiceflowContext
+  onInteraction?: (action: string, data?: any) => void
+}
 ```
 
 ### State Synchronization

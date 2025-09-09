@@ -5,11 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:with-voiceflow": "VITE_VOICEFLOW_INTEGRATION=true vite",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "test:integration": "vitest --run integration",
+    "commit:voiceflow": "git add references/exports-from-voiceflow/ src/data/voiceflowMapping.ts && git commit -m 'Update Voiceflow integration mapping'",
+    "commit:component": "npm run test && git add src/components/ && git commit -m 'Add new React component with Voiceflow integration'"
   },
   "dependencies": {
     "react": "^18.2.0",

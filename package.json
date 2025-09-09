@@ -6,14 +6,20 @@
   "scripts": {
     "dev": "vite",
     "dev:with-voiceflow": "VITE_VOICEFLOW_INTEGRATION=true vite",
+    "dev:v0": "VITE_V0_INTEGRATION=true vite",
+    "dev:full": "VITE_VOICEFLOW_INTEGRATION=true VITE_V0_INTEGRATION=true vite",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:integration": "vitest --run integration",
+    "test:v0": "vitest --run v0",
+    "v0:import": "node scripts/import-v0-component.js",
+    "v0:test": "node scripts/test-v0-components.js",
     "commit:voiceflow": "git add references/exports-from-voiceflow/ src/data/voiceflowMapping.ts && git commit -m 'Update Voiceflow integration mapping'",
-    "commit:component": "npm run test && git add src/components/ && git commit -m 'Add new React component with Voiceflow integration'"
+    "commit:component": "npm run test && git add src/components/ && git commit -m 'Add new React component with Voiceflow integration'",
+    "commit:v0": "npm run test:v0 && git add src/components/v0/ && git commit -m 'Add v0.dev component with adventure integration'"
   },
   "dependencies": {
     "react": "^18.2.0",

@@ -215,6 +215,15 @@ export function FlipbookViewer({
             className="flipbook"
             onFlip={handlePageChange}
             mobileScrollSupport={false}
+            style={{}}
+            startZIndex={0}
+            autoSize={true}
+            maxShadowOpacity={0.5}
+            showPageCorners={true}
+            disableFlipByClick={false}
+            clickEventForward={true}
+            useMouseEvents={true}
+            swipeDistance={30}
           >
             {pages.map((page, index) => (
               <div

@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // Use Supabase Storage (switch to '@/lib/flipbook/storage' for Vercel Blob)
 import { uploadOriginalPdf, validatePdfFile, sanitizeFilename } from '@/lib/flipbook/storage-supabase'
 import { createDocument, generateUniqueSlug, markDocumentError } from '@/lib/flipbook/db'
-import { processDocument } from '@/lib/flipbook/processor'
+// Note: processDocument import removed - PDF processing now handled by Inngest background jobs
 
 export const runtime = 'nodejs'
 export const maxDuration = 300 // 5 minutes for processing
@@ -80,16 +80,10 @@ export async function POST(request: NextRequest) {
     })
     console.log('✅ Database record created:', document.id)
 
-    // Start async processing (don't await - respond immediately)
-    console.log('🔄 Starting async processing...')
-    processDocument(originalFileUrl, document.id)
-      .catch(async (error) => {
-        console.error('❌ Document processing failed:', error)
-        await markDocumentError(
-          document.id,
-          error instanceof Error ? error.message : 'Unknown processing error'
-        )
-      })
+    // NOTE: This route is deprecated in favor of the Server Action (flipbook-upload.ts)
+    // PDF processing is now handled by Inngest background jobs
+    // Keeping this route for backwards compatibility but processing is disabled
+    console.log('⚠️  This route is deprecated - use Server Action instead')
 
     // Return immediately with document info
     console.log('✅ Returning success response')

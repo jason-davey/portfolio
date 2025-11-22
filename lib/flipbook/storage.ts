@@ -37,7 +37,7 @@ export async function uploadPageImage(
 
   return {
     url: blob.url,
-    size: blob.size,
+    size: imageBuffer.length, // Use buffer size since PutBlobResult doesn't include size
   }
 }
 
@@ -88,7 +88,8 @@ export async function getDocumentStorageSize(documentId: string): Promise<number
     prefix: `flipbooks/${documentId}/`,
   })
 
-  return blobs.reduce((total, blob) => total + blob.size, 0)
+  // List results include size property
+  return blobs.reduce((total, blob) => total + (blob.size || 0), 0)
 }
 
 /**

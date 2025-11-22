@@ -39,7 +39,8 @@ export async function uploadOriginalPdf(
   if (file instanceof Buffer) {
     buffer = file
   } else {
-    const arrayBuffer = await file.arrayBuffer()
+    // File object from browser/FormData
+    const arrayBuffer = await (file as File).arrayBuffer()
     buffer = Buffer.from(arrayBuffer)
   }
 

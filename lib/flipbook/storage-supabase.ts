@@ -45,7 +45,8 @@ export async function uploadOriginalPdf(
   if (file instanceof Buffer) {
     fileData = file
   } else {
-    fileData = await file.arrayBuffer()
+    // File object from browser/FormData
+    fileData = await (file as File).arrayBuffer()
   }
 
   const { data, error } = await supabase.storage

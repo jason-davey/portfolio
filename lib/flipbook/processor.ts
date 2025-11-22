@@ -1,10 +1,15 @@
 /**
  * PDF Processing for Flipbook system
  * Converts PDF pages to high-quality WebP images
+ *
+ * Note: This module is only used in Inngest background jobs.
+ * It's marked as external in next.config.mjs to prevent Vercel build issues.
  */
 
 import * as pdfjsLib from 'pdfjs-dist'
+// @ts-ignore - canvas/sharp are external dependencies for Inngest runtime only
 import { createCanvas } from 'canvas'
+// @ts-ignore - canvas/sharp are external dependencies for Inngest runtime only
 import sharp from 'sharp'
 // Use local storage for development (switch to './storage' for production with Vercel Blob)
 import { uploadPageImage, uploadThumbnail } from './storage-supabase'

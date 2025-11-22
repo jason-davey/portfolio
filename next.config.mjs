@@ -28,13 +28,11 @@ const nextConfig = {
       // Mark native modules as external
       config.externals.push('canvas', 'sharp', 'pdfjs-dist')
 
-      // Also externalize any module that imports processor to prevent webpack analysis
+      // Also externalize the processor module to prevent webpack from analyzing it
       config.externals.push(({ request }, callback) => {
-        // Externalize the processor module itself and the process-pdf function
+        // Only externalize the processor module itself (not the process-pdf function)
         if (request === '@/lib/flipbook/processor' ||
-            request === './lib/flipbook/processor' ||
-            request === '@/lib/inngest/functions/process-pdf' ||
-            request === './lib/inngest/functions/process-pdf') {
+            request === './lib/flipbook/processor') {
           return callback(null, `commonjs ${request}`)
         }
         callback()

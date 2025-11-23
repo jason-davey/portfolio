@@ -25,18 +25,8 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Handle canvas and PDF processing libraries (server-side only)
     if (isServer) {
-      // Mark native modules as external
+      // Mark native modules as external - Inngest runtime will provide these
       config.externals.push('canvas', 'sharp', 'pdfjs-dist')
-
-      // Also externalize the processor module to prevent webpack from analyzing it
-      config.externals.push(({ request }, callback) => {
-        // Only externalize the processor module itself (not the process-pdf function)
-        if (request === '@/lib/flipbook/processor' ||
-            request === './lib/flipbook/processor') {
-          return callback(null, `commonjs ${request}`)
-        }
-        callback()
-      })
     }
 
     // Handle PDF.js worker

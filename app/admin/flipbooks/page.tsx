@@ -5,13 +5,13 @@
 
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Plus, FileText, Eye, Trash2, RefreshCw, ExternalLink } from 'lucide-react'
+import { Plus, FileText, Eye, Trash2, RefreshCw } from 'lucide-react'
 import type { FlipbookDocument } from '@/lib/flipbook/db'
 
-export default function FlipbooksPage() {
+function FlipbooksContent() {
   const searchParams = useSearchParams()
   const [documents, setDocuments] = useState<FlipbookDocument[]>([])
   const [loading, setLoading] = useState(true)
@@ -229,5 +229,17 @@ export default function FlipbooksPage() {
         )}
       </main>
     </div>
+  )
+}
+
+export default function FlipbooksPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <RefreshCw className="w-8 h-8 text-gray-400 animate-spin" />
+      </div>
+    }>
+      <FlipbooksContent />
+    </Suspense>
   )
 }

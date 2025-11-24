@@ -3,14 +3,9 @@
  * Converts PDF pages to high-quality WebP images
  *
  * Note: This module is only used in Inngest background jobs.
- * It's marked as external in next.config.mjs to prevent Vercel build issues.
+ * Uses dynamic imports for ES modules to avoid CommonJS compatibility issues.
  */
 
-import * as pdfjsLib from 'pdfjs-dist'
-// @ts-ignore - canvas/sharp are external dependencies for Inngest runtime only
-import { createCanvas } from 'canvas'
-// @ts-ignore - canvas/sharp are external dependencies for Inngest runtime only
-import sharp from 'sharp'
 // Use local storage for development (switch to './storage' for production with Vercel Blob)
 import { uploadPageImage, uploadThumbnail } from './storage-supabase'
 import { updateDocumentProgress, insertPages, publishDocument } from './db'
@@ -42,6 +37,15 @@ export async function processPdfToImages(
   const { scale = 2, quality = 85, maxWidth = 1600 } = options
 
   try {
+    // Dynamic import for ES modules
+    const [pdfjsLib, { createCanvas }, sharp] = await Promise.all([
+      import('pdfjs-dist'),
+      // @ts-ignore - canvas is external dependency for Inngest runtime only
+      import('canvas'),
+      // @ts-ignore - sharp is external dependency for Inngest runtime only
+      import('sharp'),
+    ])
+
     // Configure worker for server-side
     if (typeof window === 'undefined' && !pdfjsLib.GlobalWorkerOptions.workerSrc) {
       // Use legacy worker path for Node.js environment
@@ -85,7 +89,7 @@ export async function processPdfToImages(
       const pngBuffer = canvas.toBuffer('image/png')
 
       // Optimize with Sharp (convert to WebP)
-      const webpBuffer = await sharp(pngBuffer)
+      const webpBuffer = await sharp.default(pngBuffer)
         .webp({ quality })
         .toBuffer()
 
@@ -93,7 +97,7 @@ export async function processPdfToImages(
       const { url } = await uploadPageImage(webpBuffer, documentId, pageNum)
 
       // Get image dimensions
-      const metadata = await sharp(webpBuffer).metadata()
+      const metadata = await sharp.default(webpBuffer).metadata()
 
       pages.push({
         page_number: pageNum,
@@ -124,6 +128,10 @@ export async function generateThumbnail(
   documentId: string
 ): Promise<string> {
   try {
+    // Dynamic import for ES module
+    // @ts-ignore - sharp is external dependency for Inngest runtime only
+    const sharp = (await import('sharp')).default
+
     // Fetch first page image
     const response = await fetch(firstPageUrl)
     const buffer = Buffer.from(await response.arrayBuffer())
@@ -192,6 +200,8 @@ export function estimateProcessingTime(fileSize: number): number {
  */
 export async function getPdfPageCount(pdfUrl: string): Promise<number> {
   try {
+    // Dynamic import for ES module
+    const pdfjsLib = await import('pdfjs-dist')
     const loadingTask = pdfjsLib.getDocument(pdfUrl)
     const pdf = await loadingTask.promise
     return pdf.numPages

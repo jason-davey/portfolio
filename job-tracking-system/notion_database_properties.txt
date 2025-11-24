@@ -1,0 +1,79 @@
+# NOTION DATABASE PROPERTIES - COPY & PASTE FORMAT
+
+## 🎯 JOB OPPORTUNITIES DATABASE PROPERTIES
+
+### Select Options for PRIORITY:
+🔥 Urgent
+⭐ High
+📝 Medium
+📋 Low
+
+### Select Options for STATUS:
+🔍 Identified
+📊 Scored
+📝 Applied
+🎤 Interview
+❌ Rejected
+✅ Offer
+
+### Select Options for REMOTE OPTION:
+🏠 Remote
+🏢 Hybrid
+🏭 On-site
+
+### Select Options for SOURCE:
+LinkedIn
+Indeed
+Seek
+Company Website
+Referral
+Recruiter
+
+## 🏢 COMPANIES DATABASE PROPERTIES
+
+### Select Options for INDUSTRY:
+Financial Services
+Technology
+Consulting
+Education
+Healthcare
+Government
+Telecommunications
+Other
+
+### Select Options for SIZE:
+Startup
+Small
+Medium
+Large
+Enterprise
+
+## 📋 APPLICATIONS DATABASE PROPERTIES
+
+### Select Options for STATUS:
+📝 Submitted
+✅ Acknowledged
+🎤 Interview Scheduled
+⏳ Pending
+❌ Rejected
+🎉 Offer
+
+## 📚 READING LIST DATABASE PROPERTIES
+
+### Select Options for CATEGORY:
+Job Research
+Company Intel
+Industry News
+Skill Development
+Interview Prep
+
+### Select Options for STATUS:
+📋 To Read
+👀 Reading
+✅ Complete
+💡 Key Insights
+
+### Select Options for PRIORITY:
+High
+Medium
+Low

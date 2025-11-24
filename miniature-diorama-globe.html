@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miniature Diorama Globe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 30%, #dee2e6 70%, #ced4da 100%);
+            overflow: hidden;
+        }
+
+        #globe-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .env-button {
+            padding: 12px 24px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .env-button:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .env-button.active {
+            background: rgba(107, 142, 107, 0.9);
+            border-color: #6b8e6b;
+            color: white;
+            box-shadow: 0 6px 20px rgba(107, 142, 107, 0.3);
+        }
+
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px 25px;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .info h3 {
+            margin: 0 0 8px 0;
+            color: #6b8e6b;
+            font-size: 18px;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: #666;
+            z-index: 10;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .camera-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .camera-button {
+            display: block;
+            margin: 5px 0;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .camera-button:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="globe-container">
+        <div class="info">
+            <h3>Miniature Diorama Globe</h3>
+            <p>Oversized objects on tiny world - charming toy aesthetic</p>
+        </div>
+
+        <div class="camera-controls">
+            <button class="camera-button" onclick="window.globeInstance?.setCameraView('overview')">🌍 Overview</button>
+            <button class="camera-button" onclick="window.globeInstance?.setCameraView('dramatic')">⚡ Dramatic</button>
+            <button class="camera-button" onclick="window.globeInstance?.setCameraView('worms')">🪱 Worm's Eye</button>
+            <button class="camera-button" onclick="window.globeInstance?.setCameraView('birds')">🦅 Bird's Eye</button>
+        </div>
+
+        <div class="loading" id="loading">Building miniature world...</div>
+
+        <div class="controls">
+            <button class="env-button active" data-env="0">🏢 Mini Office</button>
+            <button class="env-button" data-env="1">🌲 Tiny Forest</button>
+            <button class="env-button" data-env="2">🏙️ Small City</button>
+            <button class="env-button" data-env="3">💻 Micro Tech</button>
+            <button class="env-button" data-env="4">🏠 Little Home</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <script>
+        class MiniatureDioramaGlobe {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.globeGroup = null;
+                this.globe = null;
+                this.environments = [];
+                this.animationId = null;
+                this.currentEnvironment = 0;
+                this.globeRadius = 1; // Much smaller globe!
+                this.rotationSpeed = 0.008; // Slightly faster for toy-like feel
+                this.cameraTarget = new THREE.Vector3(0, 0, 0);
+                this.cameraPosition = { current: new THREE.Vector3(-2, 4, 6), target: new THREE.Vector3(-2, 4, 6) };
+
+                this.init();
+                this.createMiniatureWorld();
+                this.setupControls();
+                this.animate();
+                this.setupResize();
+            }
+
+            init() {
+                // Scene setup with bright, clean background
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0xf8f9fa);
+                this.scene.fog = new THREE.Fog(0xf8f9fa, 8, 15);
+
+                // Camera setup with enhanced 3-point perspective
+                const aspect = this.container.clientWidth / this.container.clientHeight;
+                this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 100); // Wider FOV for dramatic perspective
+                this.camera.position.set(-2, 4, 6); // Angled position for 3-point perspective
+                this.camera.lookAt(0, 0, 0);
+
+                // Renderer setup
+                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1;
+                this.container.appendChild(this.renderer.domElement);
+
+                // Soft, diffused lighting for miniature effect
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                this.scene.add(ambientLight);
+
+                // Main soft directional light
+                const mainLight = new THREE.DirectionalLight(0xffffff, 0.6);
+                mainLight.position.set(3, 4, 2);
+                mainLight.castShadow = true;
+                mainLight.shadow.mapSize.width = 2048;
+                mainLight.shadow.mapSize.height = 2048;
+                mainLight.shadow.camera.near = 0.1;
+                mainLight.shadow.camera.far = 20;
+                mainLight.shadow.camera.left = -5;
+                mainLight.shadow.camera.right = 5;
+                mainLight.shadow.camera.top = 5;
+                mainLight.shadow.camera.bottom = -5;
+                mainLight.shadow.bias = -0.0001;
+                this.scene.add(mainLight);
+
+                // Secondary fill light
+                const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+                fillLight.position.set(-2, 3, -1);
+                this.scene.add(fillLight);
+
+                // Create the main group
+                this.globeGroup = new THREE.Group();
+                this.scene.add(this.globeGroup);
+            }
+
+            createMiniatureWorld() {
+                this.createTinyGlobe();
+                this.createOversizedEnvironments();
+            }
+
+            createTinyGlobe() {
+                const geometry = new THREE.SphereGeometry(this.globeRadius, 32, 16);
+
+                const loader = new THREE.TextureLoader();
+                loader.load('./world-map-texture.png',
+                    (texture) => {
+                        const material = new THREE.MeshLambertMaterial({
+                            map: texture,
+                            transparent: false
+                        });
+                        this.globe = new THREE.Mesh(geometry, material);
+                        this.globe.castShadow = true;
+                        this.globe.receiveShadow = true;
+                        this.globeGroup.add(this.globe);
+                    },
+                    undefined,
+                    (error) => {
+                        const material = new THREE.MeshLambertMaterial({
+                            color: 0x6b8e6b
+                        });
+                        this.globe = new THREE.Mesh(geometry, material);
+                        this.globe.castShadow = true;
+                        this.globe.receiveShadow = true;
+                        this.globeGroup.add(this.globe);
+                    }
+                );
+            }
+
+            sphericalToCartesian(lat, lon, radius) {
+                const phi = (90 - lat) * (Math.PI / 180);
+                const theta = (lon + 180) * (Math.PI / 180);
+
+                const x = radius * Math.sin(phi) * Math.cos(theta);
+                const y = radius * Math.cos(phi);
+                const z = radius * Math.sin(phi) * Math.sin(theta);
+
+                return { x, y, z };
+            }
+
+            getSurfaceNormal(position) {
+                return new THREE.Vector3(position.x, position.y, position.z).normalize();
+            }
+
+            createOversizedEnvironments() {
+                const environmentConfigs = [
+                    { name: 'Business', color: 0x4a90e2, lat: 40, lon: -74, objects: this.createOversizedBusinessObjects },
+                    { name: 'Nature', color: 0x7ed321, lat: -15, lon: -60, objects: this.createOversizedNatureObjects },
+                    { name: 'City', color: 0xf5a623, lat: 35, lon: 139, objects: this.createOversizedCityObjects },
+                    { name: 'Tech', color: 0x9013fe, lat: 37, lon: -122, objects: this.createOversizedTechObjects },
+                    { name: 'Home', color: 0xff6b6b, lat: 52, lon: 13, objects: this.createOversizedHomeObjects }
+                ];
+
+                environmentConfigs.forEach((config, index) => {
+                    const envGroup = new THREE.Group();
+
+                    const surfacePos = this.sphericalToCartesian(config.lat, config.lon, this.globeRadius);
+                    envGroup.position.set(surfacePos.x, surfacePos.y, surfacePos.z);
+
+                    const normal = this.getSurfaceNormal(surfacePos);
+                    envGroup.lookAt(
+                        envGroup.position.x + normal.x,
+                        envGroup.position.y + normal.y,
+                        envGroup.position.z + normal.z
+                    );
+
+                    // Objects upscaled by 50% for better visibility (0.9x scale)
+                    const objects = config.objects.call(this, config.color, 0.9);
+                    objects.forEach(obj => {
+                        // Better grounding - objects sit flush with surface
+                        obj.position.add(normal.clone().multiplyScalar(0.02));
+
+                        // Add slight random rotation for natural placement
+                        if (obj.userData && !obj.userData.noRandomRotation) {
+                            obj.rotation.y += (Math.random() - 0.5) * 0.3;
+                        }
+
+                        envGroup.add(obj);
+                    });
+
+                    this.environments.push({
+                        group: envGroup,
+                        name: config.name,
+                        color: config.color,
+                        surfacePosition: surfacePos,
+                        normal: normal
+                    });
+
+                    this.globeGroup.add(envGroup);
+                });
+            }
+
+            createOversizedBusinessObjects(color, scale = 1) {
+                const objects = [];
+
+                // Small building for proper miniature scale
+                const buildingGeom = new THREE.BoxGeometry(0.16 * scale, 0.5 * scale, 0.12 * scale);
+                const buildingMat = new THREE.MeshLambertMaterial({
+                    color: color,
+                    transparent: false
+                });
+                const building = new THREE.Mesh(buildingGeom, buildingMat);
+                building.position.y = 0.25 * scale; // Half height to sit on surface
+                building.castShadow = true;
+                building.receiveShadow = true;
+
+                // Add foundation for better grounding
+                const foundationGeom = new THREE.BoxGeometry(0.18 * scale, 0.02 * scale, 0.14 * scale);
+                const foundationMat = new THREE.MeshLambertMaterial({ color: 0x888888 });
+                const foundation = new THREE.Mesh(foundationGeom, foundationMat);
+                foundation.position.y = 0.01 * scale;
+                foundation.castShadow = true;
+                foundation.receiveShadow = true;
+                objects.push(foundation);
+
+                objects.push(building);
+
+                // Small laptop for miniature scale
+                const laptopGeom = new THREE.BoxGeometry(0.24 * scale, 0.02 * scale, 0.18 * scale);
+                const laptopMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
+                const laptop = new THREE.Mesh(laptopGeom, laptopMat);
+                laptop.position.set(-0.16 * scale, 0.16 * scale, 0.12 * scale);
+                laptop.castShadow = true;
+                objects.push(laptop);
+
+                // Screen
+                const screenGeom = new THREE.BoxGeometry(0.22 * scale, 0.16 * scale, 0.01 * scale);
+                const screenMat = new THREE.MeshLambertMaterial({
+                    color: 0x000000,
+                    emissive: new THREE.Color(color).multiplyScalar(0.3)
+                });
+                const screen = new THREE.Mesh(screenGeom, screenMat);
+                screen.position.set(-0.16 * scale, 0.24 * scale, 0.22 * scale);
+                screen.rotation.x = -0.2;
+                screen.castShadow = true;
+                objects.push(screen);
+
+                // Small office chairs
+                for (let i = 0; i < 2; i++) {
+                    const chairGeom = new THREE.BoxGeometry(0.08 * scale, 0.16 * scale, 0.08 * scale);
+                    const chairMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color(color).multiplyScalar(0.7)
+                    });
+                    const chair = new THREE.Mesh(chairGeom, chairMat);
+                    chair.position.set(
+                        (i - 0.5) * 0.24 * scale,
+                        0.08 * scale,
+                        -0.16 * scale
+                    );
+                    chair.castShadow = true;
+                    objects.push(chair);
+                }
+
+                return objects;
+            }
+
+            createOversizedNatureObjects(color, scale = 1) {
+                const objects = [];
+
+                // Small trees for miniature scale
+                for (let i = 0; i < 4; i++) {
+                    const treeGroup = new THREE.Group();
+
+                    const trunkHeight = (0.3 + Math.random() * 0.2) * scale;
+                    const trunkGeom = new THREE.CylinderGeometry(0.03 * scale, 0.05 * scale, trunkHeight);
+                    const trunkMat = new THREE.MeshLambertMaterial({ color: 0x654321 });
+                    const trunk = new THREE.Mesh(trunkGeom, trunkMat);
+                    trunk.position.y = trunkHeight / 2;
+                    trunk.castShadow = true;
+                    trunk.receiveShadow = true;
+                    // Add root base for better grounding
+                    const rootGeom = new THREE.SphereGeometry(0.06 * scale, 6, 3);
+                    const rootMat = new THREE.MeshLambertMaterial({ color: 0x4a3c1a });
+                    const roots = new THREE.Mesh(rootGeom, rootMat);
+                    roots.position.y = 0.01 * scale;
+                    roots.scale.y = 0.3; // Flatten to look like ground roots
+                    roots.receiveShadow = true;
+                    treeGroup.add(roots);
+
+                    treeGroup.add(trunk);
+
+                    // Small canopy
+                    const canopySize = (0.16 + Math.random() * 0.08) * scale;
+                    const canopyGeom = new THREE.SphereGeometry(canopySize, 8, 6);
+                    const canopyMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color(color).multiplyScalar(0.8 + Math.random() * 0.4)
+                    });
+                    const canopy = new THREE.Mesh(canopyGeom, canopyMat);
+                    canopy.position.y = trunkHeight + canopySize * 0.5;
+                    canopy.castShadow = true;
+                    canopy.receiveShadow = true;
+                    treeGroup.add(canopy);
+
+                    const angle = (i / 4) * Math.PI * 2;
+                    const distance = (0.16 + Math.random() * 0.06) * scale;
+                    treeGroup.position.set(
+                        Math.cos(angle) * distance,
+                        0,
+                        Math.sin(angle) * distance
+                    );
+                    objects.push(treeGroup);
+                }
+
+                // Small mushrooms
+                for (let i = 0; i < 3; i++) {
+                    const mushroomGroup = new THREE.Group();
+
+                    const stemGeom = new THREE.CylinderGeometry(0.01 * scale, 0.016 * scale, 0.12 * scale);
+                    const stemMat = new THREE.MeshLambertMaterial({ color: 0xf5f5dc });
+                    const stem = new THREE.Mesh(stemGeom, stemMat);
+                    stem.position.y = 0.06 * scale;
+                    stem.castShadow = true;
+                    mushroomGroup.add(stem);
+
+                    const capGeom = new THREE.SphereGeometry(0.06 * scale, 8, 4);
+                    const capMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color().setHSL(0.0, 0.8, 0.6)
+                    });
+                    const cap = new THREE.Mesh(capGeom, capMat);
+                    cap.position.y = 0.12 * scale;
+                    cap.scale.y = 0.6;
+                    cap.castShadow = true;
+                    mushroomGroup.add(cap);
+
+                    const angle = (i / 3) * Math.PI * 2;
+                    mushroomGroup.position.set(
+                        Math.cos(angle) * 0.24 * scale,
+                        0,
+                        Math.sin(angle) * 0.24 * scale
+                    );
+                    objects.push(mushroomGroup);
+                }
+
+                return objects;
+            }
+
+            createOversizedCityObjects(color, scale = 1) {
+                const objects = [];
+
+                // Small skyscrapers
+                for (let i = 0; i < 5; i++) {
+                    const height = (0.36 + Math.random() * 0.24) * scale;
+                    const width = (0.06 + Math.random() * 0.04) * scale;
+                    const buildingGeom = new THREE.BoxGeometry(width, height, width);
+                    const buildingMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color().setHSL(0.15, 0.6, 0.4 + Math.random() * 0.4)
+                    });
+                    const building = new THREE.Mesh(buildingGeom, buildingMat);
+
+                    const angle = (i / 5) * Math.PI * 2;
+                    const distance = (0.16 + Math.random() * 0.08) * scale;
+                    building.position.set(
+                        Math.cos(angle) * distance,
+                        height / 2,
+                        Math.sin(angle) * distance
+                    );
+                    building.castShadow = true;
+                    building.receiveShadow = true;
+                    objects.push(building);
+
+                    // Add antenna
+                    const antennaGeom = new THREE.CylinderGeometry(0.004 * scale, 0.004 * scale, 0.08 * scale);
+                    const antennaMat = new THREE.MeshLambertMaterial({ color: 0x666666 });
+                    const antenna = new THREE.Mesh(antennaGeom, antennaMat);
+                    antenna.position.y = height + 0.04 * scale;
+                    building.add(antenna);
+                }
+
+                // Small cars
+                for (let i = 0; i < 3; i++) {
+                    const carGeom = new THREE.BoxGeometry(0.12 * scale, 0.04 * scale, 0.06 * scale);
+                    const carMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color().setHSL(Math.random(), 0.8, 0.5)
+                    });
+                    const car = new THREE.Mesh(carGeom, carMat);
+
+                    const angle = (i / 3) * Math.PI * 2;
+                    car.position.set(
+                        Math.cos(angle) * 0.26 * scale,
+                        0.02 * scale,
+                        Math.sin(angle) * 0.26 * scale
+                    );
+                    car.rotation.y = angle;
+                    car.castShadow = true;
+                    objects.push(car);
+                }
+
+                return objects;
+            }
+
+            createOversizedTechObjects(color, scale = 1) {
+                const objects = [];
+
+                // Small computer/server
+                const serverGeom = new THREE.BoxGeometry(0.2 * scale, 0.3 * scale, 0.12 * scale);
+                const serverMat = new THREE.MeshLambertMaterial({
+                    color: 0x222222,
+                    emissive: new THREE.Color(color).multiplyScalar(0.1)
+                });
+                const server = new THREE.Mesh(serverGeom, serverMat);
+                server.position.y = 0.15 * scale;
+                server.castShadow = true;
+                server.receiveShadow = true;
+                objects.push(server);
+
+                // Small LED panels
+                for (let i = 0; i < 6; i++) {
+                    const ledGeom = new THREE.BoxGeometry(0.16 * scale, 0.03 * scale, 0.004 * scale);
+                    const ledMat = new THREE.MeshLambertMaterial({
+                        color: color,
+                        emissive: new THREE.Color(color).multiplyScalar(0.5)
+                    });
+                    const led = new THREE.Mesh(ledGeom, ledMat);
+                    led.position.set(0, -0.12 * scale + i * 0.04 * scale, 0.062 * scale);
+                    server.add(led);
+                }
+
+                // Small cables
+                for (let i = 0; i < 4; i++) {
+                    const cableGeom = new THREE.CylinderGeometry(0.01 * scale, 0.01 * scale, 0.24 * scale);
+                    const cableMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
+                    const cable = new THREE.Mesh(cableGeom, cableMat);
+
+                    const angle = (i / 4) * Math.PI * 2;
+                    cable.position.set(
+                        Math.cos(angle) * 0.14 * scale,
+                        0.12 * scale,
+                        Math.sin(angle) * 0.14 * scale
+                    );
+                    cable.rotation.z = Math.PI / 2;
+                    cable.rotation.y = angle;
+                    cable.castShadow = true;
+                    objects.push(cable);
+                }
+
+                // Small floating data cubes
+                for (let i = 0; i < 5; i++) {
+                    const dataGeom = new THREE.BoxGeometry(0.04 * scale, 0.04 * scale, 0.04 * scale);
+                    const dataMat = new THREE.MeshLambertMaterial({
+                        color: color,
+                        emissive: new THREE.Color(color).multiplyScalar(0.4),
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    const data = new THREE.Mesh(dataGeom, dataMat);
+                    data.position.set(
+                        (Math.random() - 0.5) * 0.5 * scale,
+                        Math.random() * 0.4 * scale + 0.1 * scale,
+                        (Math.random() - 0.5) * 0.5 * scale
+                    );
+                    data.userData = {
+                        speed: 0.02 + Math.random() * 0.03,
+                        axis: Math.random() > 0.5 ? 'x' : 'z'
+                    };
+                    objects.push(data);
+                }
+
+                return objects;
+            }
+
+            createOversizedHomeObjects(color, scale = 1) {
+                const objects = [];
+
+                // Small house with foundation
+                const houseGeom = new THREE.BoxGeometry(0.24 * scale, 0.2 * scale, 0.2 * scale);
+                const houseMat = new THREE.MeshLambertMaterial({ color: 0xD2B48C });
+                const house = new THREE.Mesh(houseGeom, houseMat);
+                house.position.y = 0.1 * scale;
+                house.castShadow = true;
+                house.receiveShadow = true;
+
+                // Add concrete foundation
+                const foundationGeom = new THREE.BoxGeometry(0.26 * scale, 0.02 * scale, 0.22 * scale);
+                const foundationMat = new THREE.MeshLambertMaterial({ color: 0x999999 });
+                const foundation = new THREE.Mesh(foundationGeom, foundationMat);
+                foundation.position.y = 0.01 * scale;
+                foundation.castShadow = true;
+                foundation.receiveShadow = true;
+                objects.push(foundation);
+
+                objects.push(house);
+
+                // Small roof
+                const roofGeom = new THREE.ConeGeometry(0.2 * scale, 0.12 * scale, 4);
+                const roofMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                const roof = new THREE.Mesh(roofGeom, roofMat);
+                roof.position.y = 0.26 * scale;
+                roof.rotation.y = Math.PI / 4;
+                roof.castShadow = true;
+                objects.push(roof);
+
+                // Small chimney
+                const chimneyGeom = new THREE.BoxGeometry(0.04 * scale, 0.12 * scale, 0.04 * scale);
+                const chimneyMat = new THREE.MeshLambertMaterial({ color: 0x654321 });
+                const chimney = new THREE.Mesh(chimneyGeom, chimneyMat);
+                chimney.position.set(0.06 * scale, 0.32 * scale, 0);
+                chimney.castShadow = true;
+                objects.push(chimney);
+
+                // Small garden furniture
+                const tableGeom = new THREE.BoxGeometry(0.16 * scale, 0.01 * scale, 0.16 * scale);
+                const tableMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                const table = new THREE.Mesh(tableGeom, tableMat);
+
+                const legGeom = new THREE.CylinderGeometry(0.004 * scale, 0.004 * scale, 0.08 * scale);
+                const legMat = new THREE.MeshLambertMaterial({ color: 0x654321 });
+
+                // Table legs
+                for (let i = 0; i < 4; i++) {
+                    const leg = new THREE.Mesh(legGeom, legMat);
+                    const x = (i % 2 === 0 ? -1 : 1) * 0.07 * scale;
+                    const z = (i < 2 ? -1 : 1) * 0.07 * scale;
+                    leg.position.set(x, -0.045 * scale, z);
+                    table.add(leg);
+                }
+
+                table.position.set(0.3 * scale, 0.045 * scale, 0);
+                table.castShadow = true;
+                objects.push(table);
+
+                // Small flowers
+                for (let i = 0; i < 6; i++) {
+                    const flowerGroup = new THREE.Group();
+
+                    const stemGeom = new THREE.CylinderGeometry(0.004 * scale, 0.004 * scale, 0.08 * scale);
+                    const stemMat = new THREE.MeshLambertMaterial({ color: 0x228B22 });
+                    const stem = new THREE.Mesh(stemGeom, stemMat);
+                    stem.position.y = 0.04 * scale;
+                    flowerGroup.add(stem);
+
+                    const flowerGeom = new THREE.SphereGeometry(0.02 * scale, 6, 4);
+                    const flowerMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color().setHSL(Math.random(), 0.8, 0.6)
+                    });
+                    const flower = new THREE.Mesh(flowerGeom, flowerMat);
+                    flower.position.y = 0.08 * scale;
+                    flower.scale.y = 0.5;
+                    flowerGroup.add(flower);
+
+                    const angle = (i / 6) * Math.PI * 2;
+                    flowerGroup.position.set(
+                        Math.cos(angle) * 0.3 * scale,
+                        0,
+                        Math.sin(angle) * 0.3 * scale
+                    );
+                    objects.push(flowerGroup);
+                }
+
+                return objects;
+            }
+
+            setCameraView(type) {
+                switch (type) {
+                    case 'overview':
+                        this.cameraPosition.target.set(-2, 4, 6);
+                        this.camera.fov = 75;
+                        this.camera.updateProjectionMatrix();
+                        break;
+                    case 'dramatic':
+                        this.cameraPosition.target.set(-3, 2, 4);
+                        this.camera.fov = 85; // Extra wide for dramatic distortion
+                        this.camera.updateProjectionMatrix();
+                        break;
+                    case 'worms':
+                        // Low angle looking up - classic 3-point perspective
+                        this.cameraPosition.target.set(0, -1, 4);
+                        this.camera.fov = 90;
+                        this.camera.updateProjectionMatrix();
+                        break;
+                    case 'birds':
+                        // High angle looking down
+                        this.cameraPosition.target.set(-1, 6, 2);
+                        this.camera.fov = 70;
+                        this.camera.updateProjectionMatrix();
+                        break;
+                }
+            }
+
+            setupControls() {
+                const buttons = document.querySelectorAll('.env-button');
+                buttons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        this.focusEnvironment(index);
+                        buttons.forEach(b => b.classList.remove('active'));
+                        button.classList.add('active');
+                    });
+                });
+            }
+
+            focusEnvironment(index) {
+                this.currentEnvironment = index;
+            }
+
+            animate() {
+                this.animationId = requestAnimationFrame(() => this.animate());
+
+                // Smooth camera movement
+                this.cameraPosition.current.lerp(this.cameraPosition.target, 0.02);
+                this.camera.position.copy(this.cameraPosition.current);
+                this.camera.lookAt(this.cameraTarget);
+
+                // Rotate the entire miniature world
+                if (this.globeGroup) {
+                    this.globeGroup.rotation.y += this.rotationSpeed;
+                }
+
+                // Animate tech environment data streams
+                this.environments.forEach((env, index) => {
+                    if (index === 3) { // Tech environment
+                        env.group.children.forEach(child => {
+                            if (child.userData && child.userData.speed) {
+                                if (child.userData.axis === 'x') {
+                                    child.rotation.x += child.userData.speed;
+                                } else {
+                                    child.rotation.z += child.userData.speed;
+                                }
+                                // Add gentle floating motion
+                                child.position.y += Math.sin(Date.now() * 0.002 + child.position.x) * 0.005;
+                            }
+                        });
+                    }
+                });
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            hideLoading() {
+                const loadingElement = document.getElementById('loading');
+                if (loadingElement) {
+                    loadingElement.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingElement.style.display = 'none';
+                    }, 500);
+                }
+            }
+
+            setupResize() {
+                window.addEventListener('resize', () => {
+                    const width = this.container.clientWidth;
+                    const height = this.container.clientHeight;
+
+                    this.camera.aspect = width / height;
+                    this.camera.updateProjectionMatrix();
+
+                    this.renderer.setSize(width, height);
+                    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                });
+            }
+
+            dispose() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const globe = new MiniatureDioramaGlobe('globe-container');
+                window.globeInstance = globe;
+
+                setTimeout(() => {
+                    globe.hideLoading();
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error initializing globe:', error);
+                document.getElementById('loading').textContent = 'Error loading miniature world.';
+            }
+        });
+    </script>
+</body>
+</html>

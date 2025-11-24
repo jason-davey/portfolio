@@ -1,0 +1,109 @@
+
+#### SECTION 1: INTRODUCTION
+### SLIDE 1: Title Slide
+
+**Script**:
+"Hi, I'm Jason Davey, and I'm excited to be applying for the AI UX Transformation Consultant role with Deloitte's Service Delivery Transformation program. Over the next few minutes, I'll share my journey working at the intersection of AI and user experience design, showcase transformation case studies demonstrating measurable business impact, and explain how I've pioneered rapid prototyping methodologies that compress months of work into days.
+
+More detailed information on each of the case studies can be found in my portfolio link included in the supplied resume."
+
+----------------------------------------------------------------------------------------
+
+### SLIDE 2: The Shift in AI Capabilities
+
+**Script**:
+"What's changed dramatically is the nature of AI itself. Early AI work involved narrow, task-specific applications—predictive analytics, chatbot decision trees, recommendation engines."
+
+"Generative AI has transformed the landscape entirely. Tools like ChatGPT, Claude, and v0.dev aren't just automation—they're collaborative design partners that can synthesize complexity, generate functional prototypes, and accelerate innovation velocity by an order of magnitude. This shift required me to evolve from 'AI consumer' to 'AI orchestrator'—someone who understands how to integrate these tools into human-centered workflows while maintaining quality and ethical standards."
+
+----------------------------------------------------------------------------------------
+
+### SLIDE 3: Professional Introduction: Evolution of AI capabilities
+
+**Script**:
+
+My professional journey with AI technologies spans from early rules-based systems to today's generative capabilities, demonstrating progressive expertise in applying AI to solve real business challenges.
+
+----------------------------------------------------------------------------------------
+
+
+### SLIDE 4: My AI Journey Timeline
+
+At Westpac (2015-2016), I led the Next Best Action AI program that increased customer engagement through personalized recommendations, demonstrating early adoption of machine learning for customer experience optimization.
+
+
+Conversation Design enabled the Security Bank Philippines (2020) project to deliver a 24/7 chatbot reducing call centre volume by 42% while maintaining high customer satisfaction. The system handled over 10,000 daily interactions with natural language processing capabilities.
+
+
+
+Service Design was the focus of the Service Bricks AI (2021) represented a breakthrough in AI-powered service design, helping teams with automated journey mapping and intelligent pattern recognition, reducing research time by 65% across client projects.
+
+
+"But the real transformation happened in 2025 at Greenstone Financial Services, where I founded an AI+UX Innovation Practice that fundamentally changed how the organization approaches digital transformation. 
+
+----------------------------------------------------------------------------------------
+
+### SLIDE 5: Current leadership & core philosophy 
+
+
+Currently serving as Chief Design & Technology Officer at Insyteful Limited, scaling AI-enabled design methodologies across enterprise learning platforms and bringing innovation practices to new markets.
+
+My approach centers on four principles: Operations require a balance of innovation and practicality, AI as amplifier not replacement, governance enables velocity through clear frameworks, and collaboration drives adoption across organizational boundaries.
+
+----------------------------------------------------------------------------------------
+
+### SLIDE 5: Why Deloitte, Why Now
+
+**Script**:
+"Which brings me to why I'm excited about this Deloitte opportunity. 
+
+I've spent the past year establishing AI innovation practices at a single organization. Combining Education & Training experience with Experience & Service Design practices, along with the inclusion of AI enablement tools and methodologies... I'm ready to scale this approach across diverse client engagements—helping enterprises navigate AI adoption while maintaining human-centred design rigour. 
+
+Deloitte's Service Delivery Transformation program is the perfect environment for that next chapter. Looking forward to continuing the conversation soon."
+
+
+
+
+----------------------------------------------------------------------------------------
+
+### SLIDE 3: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### SECTION 2: UX PORTFOLIO & CASE STUDIES
+### SLIDE 6: Section Divider
+
+**Script**:
+"Let me walk you through three transformation case studies that demonstrate my UX leadership and business impact—culminating in the AI innovation work that's most relevant to this role."
+
+
+
+### SLIDE 7: ANZ Better Banking - Overview
+
+**Script**:
+"First: ANZ's Better Banking Business Services transformation. ANZ needed to establish a service model enabling horizontal business access—essentially redesigning how internal teams consume and deliver specialized expertise across the organization."
+
+ANZ Banking Business Services Unit transformation (Dec 2023-Mar 2024) as Design Director with Design Farm Collective, establishing service models enabling horizontal business access and optimized resource allocation.
+
+
+Applications must supply a video resume highlighting the following to be considered for first round interview:
+
+ Introduction and journey to date
+ UX portfolio of web applications with a case study 
+ How did the case study Transform the business 
+
+
+Job Requisition ID: 39626
+AI UX Transformation Consultant - Deloitte
+

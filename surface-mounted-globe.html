@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surface-Mounted Environment Globe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            overflow: hidden;
+        }
+
+        #globe-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .env-button {
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .env-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .env-button.active {
+            background: rgba(107, 142, 107, 0.8);
+            border-color: #6b8e6b;
+        }
+
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info h3 {
+            margin: 0 0 5px 0;
+            color: #6b8e6b;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: white;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="globe-container">
+        <div class="info">
+            <h3>Surface-Mounted Globe</h3>
+            <p>5 environments attached to globe surface</p>
+        </div>
+        <div class="loading" id="loading">Loading environments...</div>
+
+        <div class="controls">
+            <button class="env-button active" data-env="0">🏢 Business</button>
+            <button class="env-button" data-env="1">🌲 Nature</button>
+            <button class="env-button" data-env="2">🏙️ City</button>
+            <button class="env-button" data-env="3">💻 Tech</button>
+            <button class="env-button" data-env="4">🏠 Home</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <script>
+        class SurfaceMountedGlobe {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.globeGroup = null; // Group containing globe + all environments
+                this.globe = null;
+                this.environments = [];
+                this.animationId = null;
+                this.currentEnvironment = 0;
+                this.globeRadius = 2;
+                this.rotationSpeed = 0.003;
+
+                this.init();
+                this.createGlobeWithEnvironments();
+                this.setupControls();
+                this.animate();
+                this.setupResize();
+            }
+
+            init() {
+                // Scene setup
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0a0a0a);
+                this.scene.fog = new THREE.Fog(0x0a0a0a, 10, 20);
+
+                // Camera setup
+                const aspect = this.container.clientWidth / this.container.clientHeight;
+                this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+                this.camera.position.set(0, 2, 8);
+                this.camera.lookAt(0, 0, 0);
+
+                // Renderer setup
+                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.container.appendChild(this.renderer.domElement);
+
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                this.scene.add(ambientLight);
+
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+                mainLight.position.set(10, 10, 5);
+                mainLight.castShadow = true;
+                mainLight.shadow.mapSize.width = 2048;
+                mainLight.shadow.mapSize.height = 2048;
+                this.scene.add(mainLight);
+
+                // Create the main group that will contain everything
+                this.globeGroup = new THREE.Group();
+                this.scene.add(this.globeGroup);
+            }
+
+            createGlobeWithEnvironments() {
+                // Create central globe
+                this.createCentralGlobe();
+
+                // Create surface-mounted environments
+                this.createSurfaceEnvironments();
+            }
+
+            createCentralGlobe() {
+                const geometry = new THREE.SphereGeometry(this.globeRadius, 32, 16);
+
+                // Create a textured globe or use the world map
+                const loader = new THREE.TextureLoader();
+                loader.load('./world-map-texture.png',
+                    (texture) => {
+                        const material = new THREE.MeshLambertMaterial({
+                            map: texture,
+                            transparent: false
+                        });
+                        this.globe = new THREE.Mesh(geometry, material);
+                        this.globe.castShadow = true;
+                        this.globe.receiveShadow = true;
+                        this.globeGroup.add(this.globe);
+                    },
+                    undefined,
+                    (error) => {
+                        // Fallback to solid color
+                        const material = new THREE.MeshLambertMaterial({
+                            color: 0x6b8e6b,
+                            emissive: 0x112211
+                        });
+                        this.globe = new THREE.Mesh(geometry, material);
+                        this.globe.castShadow = true;
+                        this.globe.receiveShadow = true;
+                        this.globeGroup.add(this.globe);
+                    }
+                );
+            }
+
+            // Calculate position on sphere surface
+            sphericalToCartesian(lat, lon, radius) {
+                const phi = (90 - lat) * (Math.PI / 180); // Convert latitude to polar angle
+                const theta = (lon + 180) * (Math.PI / 180); // Convert longitude to azimuthal angle
+
+                const x = radius * Math.sin(phi) * Math.cos(theta);
+                const y = radius * Math.cos(phi);
+                const z = radius * Math.sin(phi) * Math.sin(theta);
+
+                return { x, y, z };
+            }
+
+            // Get surface normal at a position
+            getSurfaceNormal(position) {
+                return new THREE.Vector3(position.x, position.y, position.z).normalize();
+            }
+
+            createSurfaceEnvironments() {
+                const environmentConfigs = [
+                    { name: 'Business', color: 0x4a90e2, lat: 40, lon: -74, objects: this.createBusinessObjects }, // NYC
+                    { name: 'Nature', color: 0x7ed321, lat: -15, lon: -60, objects: this.createNatureObjects }, // Amazon
+                    { name: 'City', color: 0xf5a623, lat: 35, lon: 139, objects: this.createCityObjects }, // Tokyo
+                    { name: 'Tech', color: 0x9013fe, lat: 37, lon: -122, objects: this.createTechObjects }, // Silicon Valley
+                    { name: 'Home', color: 0xff6b6b, lat: 52, lon: 13, objects: this.createHomeObjects } // Berlin
+                ];
+
+                environmentConfigs.forEach((config, index) => {
+                    const envGroup = new THREE.Group();
+
+                    // Calculate position on globe surface
+                    const surfacePos = this.sphericalToCartesian(config.lat, config.lon, this.globeRadius);
+                    envGroup.position.set(surfacePos.x, surfacePos.y, surfacePos.z);
+
+                    // Calculate surface normal and orient environment to surface
+                    const normal = this.getSurfaceNormal(surfacePos);
+                    envGroup.lookAt(
+                        envGroup.position.x + normal.x,
+                        envGroup.position.y + normal.y,
+                        envGroup.position.z + normal.z
+                    );
+
+                    // Create objects for this environment (smaller scale for surface mounting)
+                    const objects = config.objects.call(this, config.color, 0.3); // 0.3 scale factor
+                    objects.forEach(obj => {
+                        // Adjust object positions to be "on top" of the surface
+                        obj.position.add(normal.clone().multiplyScalar(0.1));
+                        envGroup.add(obj);
+                    });
+
+                    this.environments.push({
+                        group: envGroup,
+                        name: config.name,
+                        color: config.color,
+                        surfacePosition: surfacePos,
+                        normal: normal
+                    });
+
+                    this.globeGroup.add(envGroup);
+                });
+            }
+
+            createBusinessObjects(color, scale = 1) {
+                const objects = [];
+
+                // Office building (scaled down)
+                const buildingGeom = new THREE.BoxGeometry(0.4 * scale, 0.8 * scale, 0.3 * scale);
+                const buildingMat = new THREE.MeshLambertMaterial({ color: color });
+                const building = new THREE.Mesh(buildingGeom, buildingMat);
+                building.position.y = 0.4 * scale;
+                building.castShadow = true;
+                objects.push(building);
+
+                // Smaller office elements
+                for (let i = 0; i < 2; i++) {
+                    const officeGeom = new THREE.BoxGeometry(0.2 * scale, 0.3 * scale, 0.2 * scale);
+                    const officeMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color(color).multiplyScalar(0.8 + i * 0.1)
+                    });
+                    const office = new THREE.Mesh(officeGeom, officeMat);
+                    office.position.set(
+                        (i - 0.5) * 0.6 * scale,
+                        0.15 * scale,
+                        0.3 * scale
+                    );
+                    office.castShadow = true;
+                    objects.push(office);
+                }
+
+                return objects;
+            }
+
+            createNatureObjects(color, scale = 1) {
+                const objects = [];
+
+                // Trees (scaled down)
+                for (let i = 0; i < 3; i++) {
+                    const treeGroup = new THREE.Group();
+
+                    // Trunk
+                    const trunkGeom = new THREE.CylinderGeometry(0.02 * scale, 0.04 * scale, 0.4 * scale);
+                    const trunkMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                    const trunk = new THREE.Mesh(trunkGeom, trunkMat);
+                    trunk.position.y = 0.2 * scale;
+                    treeGroup.add(trunk);
+
+                    // Leaves
+                    const leavesGeom = new THREE.SphereGeometry(0.15 * scale, 6, 4);
+                    const leavesMat = new THREE.MeshLambertMaterial({ color: color });
+                    const leaves = new THREE.Mesh(leavesGeom, leavesMat);
+                    leaves.position.y = 0.45 * scale;
+                    treeGroup.add(leaves);
+
+                    const angle = (i / 3) * Math.PI * 2;
+                    treeGroup.position.set(
+                        Math.cos(angle) * 0.3 * scale,
+                        0,
+                        Math.sin(angle) * 0.3 * scale
+                    );
+                    treeGroup.castShadow = true;
+                    objects.push(treeGroup);
+                }
+
+                return objects;
+            }
+
+            createCityObjects(color, scale = 1) {
+                const objects = [];
+
+                // Skyscrapers (scaled down)
+                for (let i = 0; i < 4; i++) {
+                    const height = (0.6 + Math.random() * 0.4) * scale;
+                    const buildingGeom = new THREE.BoxGeometry(0.15 * scale, height, 0.15 * scale);
+                    const buildingMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color().setHSL(0.15, 0.7, 0.4 + Math.random() * 0.3)
+                    });
+                    const building = new THREE.Mesh(buildingGeom, buildingMat);
+
+                    const angle = (i / 4) * Math.PI * 2;
+                    building.position.set(
+                        Math.cos(angle) * 0.4 * scale,
+                        height / 2,
+                        Math.sin(angle) * 0.4 * scale
+                    );
+                    building.castShadow = true;
+                    objects.push(building);
+                }
+
+                return objects;
+            }
+
+            createTechObjects(color, scale = 1) {
+                const objects = [];
+
+                // Server rack (scaled down)
+                const serverGeom = new THREE.BoxGeometry(0.15 * scale, 0.6 * scale, 0.1 * scale);
+                const serverMat = new THREE.MeshLambertMaterial({
+                    color: 0x222222,
+                    emissive: new THREE.Color(color).multiplyScalar(0.2)
+                });
+                const server = new THREE.Mesh(serverGeom, serverMat);
+                server.position.y = 0.3 * scale;
+                server.castShadow = true;
+                objects.push(server);
+
+                // LED indicators
+                for (let i = 0; i < 3; i++) {
+                    const ledGeom = new THREE.SphereGeometry(0.02 * scale);
+                    const ledMat = new THREE.MeshLambertMaterial({
+                        color: color,
+                        emissive: new THREE.Color(color).multiplyScalar(0.5)
+                    });
+                    const led = new THREE.Mesh(ledGeom, ledMat);
+                    led.position.set(
+                        0.08 * scale,
+                        0.2 * scale + i * 0.15 * scale,
+                        0.06 * scale
+                    );
+                    objects.push(led);
+                }
+
+                return objects;
+            }
+
+            createHomeObjects(color, scale = 1) {
+                const objects = [];
+
+                // House (scaled down)
+                const houseGeom = new THREE.BoxGeometry(0.5 * scale, 0.4 * scale, 0.4 * scale);
+                const houseMat = new THREE.MeshLambertMaterial({ color: 0xD2B48C });
+                const house = new THREE.Mesh(houseGeom, houseMat);
+                house.position.y = 0.2 * scale;
+                house.castShadow = true;
+                objects.push(house);
+
+                // Roof
+                const roofGeom = new THREE.ConeGeometry(0.35 * scale, 0.2 * scale, 4);
+                const roofMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                const roof = new THREE.Mesh(roofGeom, roofMat);
+                roof.position.y = 0.5 * scale;
+                roof.rotation.y = Math.PI / 4;
+                roof.castShadow = true;
+                objects.push(roof);
+
+                // Garden
+                const gardenGeom = new THREE.SphereGeometry(0.08 * scale, 6, 4);
+                const gardenMat = new THREE.MeshLambertMaterial({ color: color });
+                const garden = new THREE.Mesh(gardenGeom, gardenMat);
+                garden.position.set(0.4 * scale, 0.08 * scale, 0);
+                objects.push(garden);
+
+                return objects;
+            }
+
+            setupControls() {
+                const buttons = document.querySelectorAll('.env-button');
+                buttons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        this.focusEnvironment(index);
+                        buttons.forEach(b => b.classList.remove('active'));
+                        button.classList.add('active');
+                    });
+                });
+            }
+
+            focusEnvironment(index) {
+                this.currentEnvironment = index;
+                // Could add camera animation to focus on specific environment
+            }
+
+            animate() {
+                this.animationId = requestAnimationFrame(() => this.animate());
+
+                // Rotate the entire globe group (globe + all surface environments)
+                if (this.globeGroup) {
+                    this.globeGroup.rotation.y += this.rotationSpeed;
+                }
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            hideLoading() {
+                const loadingElement = document.getElementById('loading');
+                if (loadingElement) {
+                    loadingElement.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingElement.style.display = 'none';
+                    }, 500);
+                }
+            }
+
+            setupResize() {
+                window.addEventListener('resize', () => {
+                    const width = this.container.clientWidth;
+                    const height = this.container.clientHeight;
+
+                    this.camera.aspect = width / height;
+                    this.camera.updateProjectionMatrix();
+
+                    this.renderer.setSize(width, height);
+                    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                });
+            }
+
+            dispose() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const globe = new SurfaceMountedGlobe('globe-container');
+                window.globeInstance = globe;
+
+                setTimeout(() => {
+                    globe.hideLoading();
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error initializing globe:', error);
+                document.getElementById('loading').textContent = 'Error loading globe.';
+            }
+        });
+    </script>
+</body>
+</html>

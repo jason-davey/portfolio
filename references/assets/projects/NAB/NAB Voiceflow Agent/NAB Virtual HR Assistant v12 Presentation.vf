@@ -1,0 +1,3380 @@
+{
+  "version": {
+    "_version": 13.03,
+    "autoSaveFromRestore": false,
+    "canvasTemplates": [],
+    "components": [],
+    "creatorID": 1769813,
+    "manualSave": false,
+    "model": {},
+    "name": "Initial Version",
+    "platformData": {
+      "slots": [],
+      "intents": [
+        {
+          "key": "None",
+          "name": "None",
+          "slots": [],
+          "inputs": [],
+          "noteID": null
+        }
+      ],
+      "settings": {
+        "restart": true,
+        "repeat": 100,
+        "locales": [
+          "en-US"
+        ],
+        "globalNoMatch": {
+          "type": "static",
+          "prompt": {
+            "content": [
+              {
+                "children": [
+                  {
+                    "text": "Sorry, I didn’t get that. Please try again."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "messageDelay": {
+          "durationMilliseconds": 500
+        },
+        "defaultVoice": "elevenlabs:eleven_turbo_v2_5:ZF6FPAbjXT4488VcRRnw",
+        "deepgramASR": {
+          "silenceWaitMS": 10,
+          "punctuationWaitMS": 200,
+          "partialWaitMS": 1000,
+          "interruptionWaitWords": 1,
+          "audioCue": null
+        }
+      },
+      "publishing": {
+        "avatar": "https://cdn.voiceflow.com/assets/logo.png",
+        "color": "#397DFF",
+        "description": "Hi, how can I help you today?",
+        "feedback": false,
+        "image": "https://cdn.voiceflow.com/assets/logo.png",
+        "persistence": "localStorage",
+        "position": "right",
+        "spacing": {
+          "side": 24,
+          "bottom": 24
+        },
+        "title": "Your AI agent",
+        "watermark": true,
+        "audioInterface": true
+      },
+      "platform": "webchat"
+    },
+    "programResources": {
+      "agents": {
+        "6900301c07164c00076103aa": {
+          "name": "Welcome and navigation options",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "6900301c07164c00076103b1",
+              "name": "User selects career history",
+              "variables": [],
+              "description": "The user chooses to view Jason's career history."
+            },
+            {
+              "id": "6900301c07164c00076103b2",
+              "name": "User selects skills and competencies",
+              "variables": [],
+              "description": "The user wants to learn about Jason's skills and competencies."
+            },
+            {
+              "id": "6900301c07164c00076103b3",
+              "name": "User selects project portfolio",
+              "variables": [],
+              "description": "The user chooses to explore the project portfolio."
+            },
+            {
+              "id": "6900301c07164c00076103b4",
+              "name": "User asks about scheduling or next steps",
+              "variables": [],
+              "description": "The user asks to schedule an interview or about next steps."
+            },
+            {
+              "id": "6900482a2205eea1947ca421",
+              "name": "User asks about Virtual Assistant Analysis",
+              "variables": [],
+              "description": "The user asks to view or know more about the Virtual Assistant Analysis"
+            }
+          ],
+          "buttonTool": null,
+          "description": null,
+          "carouselTool": null,
+          "instructions": "Greet the user warmly as NAB’s Virtual HR Assistant. Introduce Jason Davey’s application for the Conversation Design Consultant role. Explain that you can help them explore his background. Present four clear buttons: View career history, Skills & Competencies, Project portfolio, Virtual Assistant Analysis. Wait for the user's selection before continuing.",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": null,
+          "mcpIntegrationTools": []
+        },
+        "6900301c07164c00076103ab": {
+          "name": "Present career history",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "6900301c07164c00076103b5",
+              "name": "User wants skills and competencies",
+              "variables": [],
+              "description": "The user decides to see skills and competencies."
+            },
+            {
+              "id": "6900301c07164c00076103b6",
+              "name": "User wants project portfolio",
+              "variables": [],
+              "description": "The user asks to view the project portfolio."
+            },
+            {
+              "id": "6900301c07164c00076103b7",
+              "name": "User wants to return to start",
+              "variables": [],
+              "description": "The user wants to go back to the main options."
+            },
+            {
+              "id": "6900301c07164c00076103b8",
+              "name": "User asks about scheduling or next steps",
+              "variables": [],
+              "description": "The user asks to schedule an interview or about next steps."
+            },
+            {
+              "id": "69004ae22205eea1947ca496",
+              "name": "User asks about Virtual Assistant Analysis",
+              "variables": [],
+              "description": "The user asks to view or know more about the Virtual Assistant Analysis"
+            }
+          ],
+          "buttonTool": null,
+          "description": null,
+          "carouselTool": null,
+          "instructions": "Share Jason Davey’s career highlights: He has held leadership positions across major financial and service organisations, specializing in service design, AI integration, and experience strategy. At Insyteful Limited and previously Greenstone Financial Services, he blended human-centered design with AI-driven tools for strategic outcomes. Ask if the user would like to view his skills & competencies or project portfolio or Virutal Assistant Analysis slide deck.",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": {
+            "enabled": true,
+            "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+          },
+          "mcpIntegrationTools": []
+        },
+        "6900301c07164c00076103ac": {
+          "name": "Present skills & competencies",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "6900301c07164c00076103b9",
+              "name": "User wants project portfolio",
+              "variables": [],
+              "description": "The user chooses to view the project portfolio."
+            },
+            {
+              "id": "6900301c07164c00076103ba",
+              "name": "User wants career history",
+              "variables": [],
+              "description": "The user decides to return to career history."
+            },
+            {
+              "id": "6900301c07164c00076103bb",
+              "name": "User wants to return to start",
+              "variables": [],
+              "description": "The user wants to go back to the main options."
+            },
+            {
+              "id": "6900301c07164c00076103bc",
+              "name": "User asks about scheduling or next steps",
+              "variables": [],
+              "description": "The user asks to schedule an interview or about next steps."
+            },
+            {
+              "id": "69004b4b2205eea1947ca4a4",
+              "name": "User asks about Virtual Assistant Analysis",
+              "variables": [],
+              "description": "The user asks to view or know more about the Virtual Assistant Analysis"
+            }
+          ],
+          "buttonTool": null,
+          "description": null,
+          "carouselTool": null,
+          "instructions": "Outline Jason Davey’s core skills and competencies: Conversational design and multi-agent orchestration; AI UX strategy and service design thinking; Proficiency with Voiceflow, Figma, Chronicle, Miro, Pickaxe; Empathy-led, outcome-driven behavioural design; and experience in deploying enterprise HR/L&D and SME decision-systems. Ask if the user wants to see his project portfolio or career history or Virutal Assistant Analysis slide deck.",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": {
+            "enabled": true,
+            "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+          },
+          "mcpIntegrationTools": []
+        },
+        "6900301c07164c00076103ad": {
+          "name": "Present project portfolio",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "6900301c07164c00076103be",
+              "name": "User wants career history",
+              "variables": [],
+              "description": "The user decides to review Jason’s career history."
+            },
+            {
+              "id": "6900301c07164c00076103bf",
+              "name": "User wants skills and competencies",
+              "variables": [],
+              "description": "The user wants to see skills and competencies."
+            },
+            {
+              "id": "6900301c07164c00076103c0",
+              "name": "User wants to return to start",
+              "variables": [],
+              "description": "The user wants to go back to the main options."
+            },
+            {
+              "id": "6900301c07164c00076103c1",
+              "name": "User asks about scheduling or next steps",
+              "variables": [],
+              "description": "The user asks to schedule an interview or about next steps."
+            },
+            {
+              "id": "69004b842205eea1947ca4ab",
+              "name": "User asks about Virtual Assistant Analysis",
+              "variables": [],
+              "description": "The user asks to view or know more about the Virtual Assistant Analysis"
+            }
+          ],
+          "buttonTool": null,
+          "description": "",
+          "carouselTool": null,
+          "instructions": "Present Jason Davey’s project portfolio, available as a carousel here in the chat window. Ask if the user would like to review the portfolio, or return to career history or skills & competencies, or Virutal Assistant Analysis slide deck.",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": {
+            "enabled": true,
+            "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+          },
+          "mcpIntegrationTools": []
+        },
+        "6900301c07164c00076103ae": {
+          "name": "Slide deck opened successfully",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "6900301c07164c00076103c2",
+              "name": "End of journey",
+              "variables": [],
+              "description": "The user might want to return to the main menu. If not, end the flow here."
+            }
+          ],
+          "buttonTool": null,
+          "description": null,
+          "carouselTool": {
+            "enabled": true,
+            "description": "Displays a carousel of up to 10 cards, each containing a title, description, image, and optional action buttons."
+          },
+          "instructions": "Confirm to the user that the slide deck is now available via the link provided or via the embedded carousel. Offer a closing note: 'Let me know if you'd like to revisit another section or need interview coordination.'",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": {
+            "enabled": true,
+            "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+          },
+          "mcpIntegrationTools": []
+        },
+        "6900301c07164c00076103af": {
+          "name": "Schedule interview or discuss next steps",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "6900301c07164c00076103c3",
+              "name": "User provides availability",
+              "variables": [],
+              "description": "The user shares suggested date/time options for an interview."
+            },
+            {
+              "id": "6900301c07164c00076103c4",
+              "name": "User cancels scheduling",
+              "variables": [],
+              "description": "The user decides not to proceed with scheduling."
+            }
+          ],
+          "buttonTool": null,
+          "description": null,
+          "carouselTool": null,
+          "instructions": "If the user asks to schedule an interview or about next steps, acknowledge and invite them to provide preferred dates/times for an interview with Jason Davey. Explain you’ll arrange the meeting and send a calendar invite once confirmed.",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": null,
+          "mcpIntegrationTools": []
+        },
+        "6900301c07164c00076103b0": {
+          "name": "Interview scheduled successfully",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "6900301c07164c00076103c5",
+              "name": "End of journey",
+              "variables": [],
+              "description": "The user may want to navigate further. If not, end here."
+            }
+          ],
+          "buttonTool": null,
+          "description": null,
+          "carouselTool": null,
+          "instructions": "Confirm to the user that the interview with Jason Davey has been scheduled according to the provided preferences. Thank them and offer to return to the candidate's profile for further exploration if desired.",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": null,
+          "mcpIntegrationTools": []
+        },
+        "6900447e2205eea1947ca385": {
+          "name": "Project Portfolio opened successfully",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [],
+          "buttonTool": null,
+          "description": "",
+          "carouselTool": null,
+          "instructions": "Confirm to the user that the project portfolio is now available via the embedded carousel. Offer a closing note: 'Let me know if you'd like to revisit another section or need interview coordination.'",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": null,
+          "integrationTools": [],
+          "knowledgeBaseTool": {
+            "enabled": true,
+            "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+          },
+          "mcpIntegrationTools": []
+        },
+        "69004be32205eea1947ca4b6": {
+          "name": "Present Virtual Assistant Analysis slide deck",
+          "settings": {
+            "model": "claude-4-sonnet",
+            "maxTokens": 5000,
+            "temperature": 0.3,
+            "reasoningEffort": null
+          },
+          "cardTool": null,
+          "apiTools": [],
+          "pathTools": [
+            {
+              "id": "69004c842205eea1947ca4d1",
+              "name": "User wants career history",
+              "variables": [],
+              "description": "The user decides to review Jason’s career history."
+            },
+            {
+              "id": "69004e112205eea1947ca517",
+              "name": "User wants to return to start",
+              "variables": [],
+              "description": "The user wants to go back to the main options."
+            },
+            {
+              "id": "69004e202205eea1947ca518",
+              "name": "User wants skills and competencies",
+              "variables": [],
+              "description": "The user wants to see skills and competencies."
+            },
+            {
+              "id": "69004e2c2205eea1947ca51b",
+              "name": "User asks about scheduling or next steps",
+              "variables": [],
+              "description": "The user asks to schedule an interview or about next steps."
+            },
+            {
+              "id": "69004e612205eea1947ca52b",
+              "name": "User wants project portfolio",
+              "variables": [],
+              "description": "The user chooses to view the project portfolio."
+            }
+          ],
+          "buttonTool": null,
+          "description": "",
+          "carouselTool": null,
+          "instructions": "Present the Virtual Assitants Analysis slide deck. Offer the link to the slide deck: Chronicle Slide Deck – Jason Davey: Conversation Design Consultant. (The link is in the knowledge base) Ask if the user would like to open the deck now, or return to career history or skills & competencies or open the project portfolio.",
+          "functionTools": [],
+          "webSearchTool": null,
+          "callForwardTool": {
+            "address": "",
+            "enabled": false,
+            "addressType": "phone",
+            "description": "Forwards the call to a different number or extension."
+          },
+          "integrationTools": [],
+          "knowledgeBaseTool": {
+            "enabled": true,
+            "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+          },
+          "mcpIntegrationTools": []
+        }
+      },
+      "prompts": {},
+      "apiTools": {},
+      "messages": {},
+      "integrationTools": {},
+      "mcpIntegrationTools": {}
+    },
+    "prototype": {
+      "type": "chat",
+      "data": {
+        "name": "NAB Virtual HR Assistant – Jason Davey Candidate Presentation",
+        "locales": [
+          "en-US"
+        ]
+      },
+      "model": {
+        "intents": [],
+        "slots": []
+      },
+      "context": {
+        "stack": [
+          {
+            "diagramID": "6900301c07164c00076103c6",
+            "storage": {},
+            "variables": {}
+          }
+        ],
+        "variables": {}
+      },
+      "surveyorContext": {
+        "platform": "webchat",
+        "slotsMap": {},
+        "extraSlots": [],
+        "cmsEntities": {},
+        "extraIntents": [],
+        "cmsVariables": {
+          "sessions": {
+            "isSystem": true,
+            "description": "The number of times a particular user has opened the app.",
+            "defaultValue": null
+          },
+          "user_id": {
+            "isSystem": true,
+            "description": "The user's unique ID.",
+            "defaultValue": null
+          },
+          "timestamp": {
+            "isSystem": true,
+            "description": "UNIX timestamp (number of seconds since January 1st, 1970 at UTC).",
+            "defaultValue": null
+          },
+          "platform": {
+            "isSystem": true,
+            "description": "The platform your agent is running on (e.g. \"voiceflow\").",
+            "defaultValue": null
+          },
+          "locale": {
+            "isSystem": true,
+            "description": "The locale of the user (eg. en-US, en-CA, it-IT, fr-FR, ...).",
+            "defaultValue": null
+          },
+          "intent_confidence": {
+            "isSystem": true,
+            "description": "The confidence interval (measured as a value from 0 to 100) for the most recently matched intent.",
+            "defaultValue": null
+          },
+          "last_response": {
+            "isSystem": true,
+            "description": "The agent's last response (text/speak) in a string.",
+            "defaultValue": null
+          },
+          "last_event": {
+            "isSystem": true,
+            "description": "The object containing the last event that the user client has triggered.",
+            "defaultValue": null
+          },
+          "last_utterance": {
+            "isSystem": true,
+            "description": "The user's last utterance in a text string.",
+            "defaultValue": null
+          },
+          "vf_memory": {
+            "isSystem": true,
+            "description": "Last 10 user inputs and agent responses in a string (e.g. \"agent: How can i help?\"\nuser: What's the weather today?).",
+            "defaultValue": null
+          }
+        },
+        "usedIntentsSet": [],
+        "functionDefinitions": {},
+        "referencedAgentsIDs": [
+          "6900301c07164c00076103aa",
+          "6900301c07164c00076103ab",
+          "6900301c07164c00076103ac",
+          "6900301c07164c00076103ad",
+          "6900301c07164c00076103ae",
+          "6900301c07164c00076103af",
+          "6900301c07164c00076103b0",
+          "6900447e2205eea1947ca385",
+          "69004be32205eea1947ca4b6"
+        ],
+        "referencedPromptIDs": [],
+        "referencedAPIToolIDs": [],
+        "referencedResponseIDs": [],
+        "referencedIntegrationToolIDs": [],
+        "referencedMCPIntegrationToolIDs": [],
+        "interfaces": [],
+        "permissions": [],
+        "usedEventsSet": [],
+        "goToIntentsSet": []
+      },
+      "settings": {},
+      "platform": "webchat"
+    },
+    "settings": {
+      "voice": {
+        "stt": {
+          "provider": "deepgram",
+          "model": "flux",
+          "locale": "en",
+          "punctuationWaitMS": 200,
+          "partialWaitMS": 1000,
+          "silenceWaitMS": 10,
+          "interruptionWaitWords": 1
+        },
+        "tts": {
+          "provider": "elevenlabs",
+          "model": "eleven_turbo_v2_5",
+          "voice": "ZF6FPAbjXT4488VcRRnw",
+          "settings": {
+            "speed": 1.2
+          }
+        },
+        "failureMessage": "We’re sorry, but the call cannot be completed at this time. Please try again later.",
+        "hasCallRecording": true,
+        "audioSync": true
+      },
+      "widget": {
+        "type": "chat",
+        "chat": {
+          "voiceInput": true,
+          "voiceOutput": true,
+          "renderMode": "widget",
+          "headerImage": {
+            "enabled": true,
+            "url": "https://cm4-production-assets.s3.amazonaws.com/1761654738717-nab-icon.png"
+          },
+          "agentImage": {
+            "enabled": true,
+            "url": "https://cm4-production-assets.s3.amazonaws.com/1761656258681-nab-icon.png"
+          },
+          "banner": {
+            "title": "NAB Virtual HR Assistant",
+            "description": "Introducing Jason Davey...He's applying for the role of Conversation Design Consultant. I've screened his details and I can help you further...",
+            "enabled": true,
+            "imageURL": "https://cm4-production-assets.s3.amazonaws.com/1761654371280-jd-28oct25_sq.jpg"
+          },
+          "placeholderText": "Just enter 1 or 2 words to prompt...",
+          "disclaimer": {
+            "enabled": false,
+            "title": "Privacy notice",
+            "description": "Before we can proceed with your conversation, we kindly ask you to review and accept our privacy policy, outlining how we handle and protect your personal information throughout our services.",
+            "primaryButtonText": "Submit",
+            "secondaryButtonText": "Privacy policy",
+            "secondaryButtonURL": ""
+          },
+          "aiDisclaimer": {
+            "text": "Generated by AI, double-check for accuracy.",
+            "enabled": true
+          },
+          "handoffToAgentImageURL": ""
+        },
+        "voice": {
+          "renderMode": "full",
+          "content": {
+            "talkingText": "Talk to interrupt",
+            "endButtonText": "End",
+            "listeningText": "Listening...",
+            "startButtonText": "Start a call",
+            "callToActionText": "How can I help you?"
+          }
+        },
+        "common": {
+          "sideSpacing": "20",
+          "bottomSpacing": "20",
+          "position": "right",
+          "fontFamily": "Source Sans Pro",
+          "primaryColor": {
+            "color": "#CB0101",
+            "palette": {
+              "50": "#FFE6E6",
+              "100": "#FCC",
+              "200": "#FF9A9A",
+              "300": "#FE6767",
+              "400": "#FE3434",
+              "500": "#FE0101",
+              "600": "#CB0101",
+              "700": "#980101",
+              "800": "#600",
+              "900": "#300"
+            }
+          },
+          "poweredBy": true,
+          "launcher": {
+            "type": "icon",
+            "text": "Test your agent"
+          },
+          "footerLink": {
+            "enabled": false
+          },
+          "persistence": "localStorage"
+        },
+        "security": {
+          "approvedDomains": {
+            "enabled": false,
+            "domains": ""
+          },
+          "disableTranscript": false
+        }
+      },
+      "memory": {
+        "turns": 50
+      },
+      "llmFallback": {
+        "models": {
+          "open-ai": {
+            "*": {
+              "provider": "anthropic",
+              "model": "claude-4-sonnet"
+            }
+          },
+          "anthropic": {
+            "*": {
+              "provider": "open-ai",
+              "model": "gpt-4.1-2025-04-14"
+            }
+          },
+          "groq": {
+            "*": {
+              "provider": "anthropic",
+              "model": "claude-4-sonnet"
+            }
+          },
+          "google": {
+            "*": {
+              "provider": "anthropic",
+              "model": "claude-4-sonnet"
+            }
+          }
+        }
+      },
+      "globalNoMatch": {
+        "type": "static",
+        "prompt": [
+          {
+            "text": [
+              "Sorry, I didn’t get that. Please try again."
+            ]
+          }
+        ]
+      },
+      "intentClassification": {
+        "type": "rag",
+        "params": {
+          "model": "claude-3.5-haiku",
+          "temperature": 0.1
+        },
+        "promptWrapper": null
+      }
+    },
+    "topics": [
+      {
+        "type": "DIAGRAM",
+        "sourceID": "64dbb6696a8fab0013dba194"
+      }
+    ],
+    "variables": [
+      "sessions",
+      "user_id",
+      "timestamp",
+      "platform",
+      "locale",
+      "intent_confidence",
+      "last_response",
+      "last_event",
+      "last_utterance",
+      "vf_memory"
+    ],
+    "_id": "6900301cf30d3ce66977fc88",
+    "updatedAt": "2025-10-28T11:57:54.918Z",
+    "publishedAt": "2024-09-27T16:54:27.996Z",
+    "domains": [
+      {
+        "id": "cla06iyr900b206pkh8d4ap8n",
+        "name": "Home",
+        "live": true,
+        "topicIDs": [
+          "64dbb6696a8fab0013dba194"
+        ],
+        "rootDiagramID": "64dbb6696a8fab0013dba194",
+        "updatedBy": 1769813,
+        "updatedAt": "2025-10-28T02:53:16.484Z"
+      }
+    ],
+    "projectID": "6900301cf30d3ce66977fc87",
+    "rootDiagramID": "6900301c07164c00076103c6",
+    "templateDiagramID": "64dbb6696a8fab0013dba195"
+  },
+  "diagrams": {
+    "6900301c07164c00076103c6": {
+      "name": "NAB Virtual HR Assistant – Jason Davey Candidate Presentation",
+      "type": "TOPIC",
+      "zoom": 100,
+      "nodes": {
+        "6900300007164c0007610389": {
+          "nodeID": "6900300007164c0007610389",
+          "type": "start",
+          "data": {
+            "name": "Start",
+            "color": "#56b365",
+            "triggers": [],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {
+                "next": {
+                  "id": "6900300007164c000761038a",
+                  "type": "next",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          64.34,
+                          22
+                        ]
+                      },
+                      {
+                        "point": [
+                          94.42,
+                          22
+                        ]
+                      },
+                      {
+                        "point": [
+                          94.42,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          124.51,
+                          -394.48
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8207xve8v80dx6"
+                }
+              },
+              "dynamic": []
+            },
+            "steps": []
+          },
+          "coords": [
+            0,
+            0
+          ]
+        },
+        "cmh9z28lh0g8907xv8ws5813x": {
+          "type": "agent",
+          "nodeID": "cmh9z28lh0g8907xv8ws5813x",
+          "data": {
+            "agentID": "6900301c07164c00076103aa",
+            "listenForOtherTriggers": true,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "6900301c07164c00076103b1": {
+                  "id": "6900301c07164c00076103b1",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          455.51,
+                          -204.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          575.25,
+                          -204.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          575.25,
+                          27
+                        ]
+                      },
+                      {
+                        "point": [
+                          695,
+                          27
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8307xvdcvharao"
+                },
+                "6900301c07164c00076103b2": {
+                  "id": "6900301c07164c00076103b2",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          455.51,
+                          -142.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          572.62,
+                          -142.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          572.62,
+                          591.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          689.73,
+                          591.63
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8407xvalg1elu2"
+                },
+                "6900301c07164c00076103b3": {
+                  "id": "6900301c07164c00076103b3",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          455.51,
+                          -72.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          936.73,
+                          -72.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          936.73,
+                          -812.84
+                        ]
+                      },
+                      {
+                        "point": [
+                          1417.95,
+                          -812.84
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "6900366e03118e6ccb28fe28"
+                },
+                "6900301c07164c00076103b4": {
+                  "id": "6900301c07164c00076103b4",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          455.51,
+                          -2.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          578.71,
+                          -2.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          578.71,
+                          1764.15
+                        ]
+                      },
+                      {
+                        "point": [
+                          701.91,
+                          1764.15
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8707xv10y26x6d"
+                },
+                "6900482a2205eea1947ca421": {
+                  "id": "6900482a03118e6ccb28fec2",
+                  "target": "69004bc003118e6ccb28fedf",
+                  "type": "",
+                  "data": {}
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          },
+          "coords": [
+            0,
+            0
+          ]
+        },
+        "cmh9z28lh0g8a07xv2g6mav9z": {
+          "type": "agent",
+          "nodeID": "cmh9z28lh0g8a07xv2g6mav9z",
+          "data": {
+            "agentID": "6900301c07164c00076103ab",
+            "listenForOtherTriggers": false,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "6900301c07164c00076103b5": {
+                  "id": "6900301c07164c00076103b5",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          694,
+                          206
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          670,
+                          206
+                        ]
+                      },
+                      {
+                        "point": [
+                          670,
+                          540.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          854.73,
+                          540.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          854.73,
+                          564.63
+                        ],
+                        "toTop": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8407xvalg1elu2"
+                },
+                "6900301c07164c00076103b6": {
+                  "id": "6900301c07164c00076103b6",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1026,
+                          276
+                        ]
+                      },
+                      {
+                        "point": [
+                          1221.97,
+                          276
+                        ]
+                      },
+                      {
+                        "point": [
+                          1221.97,
+                          -812.84
+                        ]
+                      },
+                      {
+                        "point": [
+                          1417.95,
+                          -812.84
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "6900366e03118e6ccb28fe28"
+                },
+                "6900301c07164c00076103b7": {
+                  "id": "6900301c07164c00076103b7",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          694,
+                          346
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          574.25,
+                          346
+                        ]
+                      },
+                      {
+                        "point": [
+                          574.25,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          454.51,
+                          -394.48
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8207xve8v80dx6"
+                },
+                "6900301c07164c00076103b8": {
+                  "id": "6900301c07164c00076103b8",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          694,
+                          416
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          670,
+                          416
+                        ],
+                        "locked": true
+                      },
+                      {
+                        "point": [
+                          685.9,
+                          416.78
+                        ],
+                        "locked": true
+                      },
+                      {
+                        "point": [
+                          685.9,
+                          474.56542167448026
+                        ],
+                        "locked": true
+                      },
+                      {
+                        "point": [
+                          692.5438826871086,
+                          1105.4654216744802
+                        ]
+                      },
+                      {
+                        "point": [
+                          866.9038826871086,
+                          1105.4654216744802
+                        ]
+                      },
+                      {
+                        "point": [
+                          866.9038826871086,
+                          1737.1454216744803
+                        ],
+                        "toTop": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8707xv10y26x6d"
+                },
+                "69004ae22205eea1947ca496": {
+                  "id": "69004ae203118e6ccb28fed6",
+                  "target": "69004bc003118e6ccb28fedf",
+                  "type": "",
+                  "data": {}
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8b07xvbkcafp4d": {
+          "type": "agent",
+          "nodeID": "cmh9z28lh0g8b07xvbkcafp4d",
+          "data": {
+            "agentID": "6900301c07164c00076103ac",
+            "listenForOtherTriggers": false,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "6900301c07164c00076103b9": {
+                  "id": "6900301c07164c00076103b9",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1020.73,
+                          770.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          1219.34,
+                          770.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          1219.34,
+                          -812.84
+                        ]
+                      },
+                      {
+                        "point": [
+                          1417.95,
+                          -812.84
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "6900366e03118e6ccb28fe28"
+                },
+                "6900301c07164c00076103ba": {
+                  "id": "6900301c07164c00076103ba",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1020.73,
+                          832.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          1049,
+                          832.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          1049,
+                          27
+                        ]
+                      },
+                      {
+                        "point": [
+                          1025,
+                          27
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8307xvdcvharao"
+                },
+                "6900301c07164c00076103bb": {
+                  "id": "6900301c07164c00076103bb",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          688.73,
+                          894.63
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          571.62,
+                          894.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          571.62,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          454.51,
+                          -394.48
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8207xve8v80dx6"
+                },
+                "6900301c07164c00076103bc": {
+                  "id": "6900301c07164c00076103bc",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1020.73,
+                          964.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          1044.73,
+                          964.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          1044.73,
+                          1350.89
+                        ]
+                      },
+                      {
+                        "point": [
+                          866.91,
+                          1350.89
+                        ]
+                      },
+                      {
+                        "point": [
+                          866.91,
+                          1737.15
+                        ],
+                        "toTop": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8707xv10y26x6d"
+                },
+                "69004b4b2205eea1947ca4a4": {
+                  "id": "69004b4b03118e6ccb28fed8",
+                  "target": "69004bc003118e6ccb28fedf",
+                  "type": "",
+                  "data": {}
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8c07xv83jm365k": {
+          "type": "agent",
+          "nodeID": "cmh9z28lh0g8c07xv83jm365k",
+          "data": {
+            "agentID": "6900301c07164c00076103ad",
+            "listenForOtherTriggers": true,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "6900301c07164c00076103be": {
+                  "id": "6900301c07164c00076103be",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1012.13,
+                          1370.49
+                        ]
+                      },
+                      {
+                        "point": [
+                          1049,
+                          1370.49
+                        ]
+                      },
+                      {
+                        "point": [
+                          1049,
+                          27
+                        ]
+                      },
+                      {
+                        "point": [
+                          1025,
+                          27
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8307xvdcvharao"
+                },
+                "6900301c07164c00076103bf": {
+                  "id": "6900301c07164c00076103bf",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1012.13,
+                          1432.49
+                        ]
+                      },
+                      {
+                        "point": [
+                          1043.73,
+                          1432.49
+                        ]
+                      },
+                      {
+                        "point": [
+                          1043.73,
+                          591.63
+                        ]
+                      },
+                      {
+                        "point": [
+                          1019.73,
+                          591.63
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8407xvalg1elu2"
+                },
+                "6900301c07164c00076103c0": {
+                  "id": "6900301c07164c00076103c0",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          680.13,
+                          1502.49
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          567.32,
+                          1502.49
+                        ]
+                      },
+                      {
+                        "point": [
+                          567.32,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          454.51,
+                          -394.48
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8207xve8v80dx6"
+                },
+                "6900301c07164c00076103c1": {
+                  "id": "6900301c07164c00076103c1",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1013.53,
+                          1572.49
+                        ]
+                      },
+                      {
+                        "point": [
+                          1037.53,
+                          1572.49
+                        ]
+                      },
+                      {
+                        "point": [
+                          1037.53,
+                          1713.15
+                        ]
+                      },
+                      {
+                        "point": [
+                          866.91,
+                          1713.15
+                        ]
+                      },
+                      {
+                        "point": [
+                          866.91,
+                          1737.15
+                        ],
+                        "toTop": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8707xv10y26x6d"
+                },
+                "69004b842205eea1947ca4ab": {
+                  "id": "69004b8403118e6ccb28feda",
+                  "target": "69004bc003118e6ccb28fedf",
+                  "type": "",
+                  "data": {}
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8d07xv4ekihhgy": {
+          "type": "agent",
+          "nodeID": "cmh9z28lh0g8d07xv4ekihhgy",
+          "data": {
+            "agentID": "6900301c07164c00076103ae",
+            "listenForOtherTriggers": true,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "6900301c07164c00076103c2": {
+                  "id": "6900301c07164c00076103c2",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1424.14,
+                          381.2
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          939.32,
+                          381.2
+                        ]
+                      },
+                      {
+                        "point": [
+                          939.32,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          454.51,
+                          -394.48
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8207xve8v80dx6"
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8e07xv3ccred2m": {
+          "type": "agent",
+          "nodeID": "cmh9z28lh0g8e07xv3ccred2m",
+          "data": {
+            "agentID": "6900301c07164c00076103af",
+            "listenForOtherTriggers": false,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "6900301c07164c00076103c3": {
+                  "id": "6900301c07164c00076103c3",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1032.91,
+                          1954.15
+                        ]
+                      },
+                      {
+                        "point": [
+                          1353.8,
+                          1954.15
+                        ]
+                      },
+                      {
+                        "point": [
+                          1353.8,
+                          527.35
+                        ]
+                      },
+                      {
+                        "point": [
+                          1674.69,
+                          527.35
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8807xvgv3j6u43"
+                },
+                "6900301c07164c00076103c4": {
+                  "id": "6900301c07164c00076103c4",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          700.91,
+                          2008.15
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          577.71,
+                          2008.15
+                        ]
+                      },
+                      {
+                        "point": [
+                          577.71,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          454.51,
+                          -394.48
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8207xve8v80dx6"
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8f07xvht1z9v76": {
+          "type": "agent",
+          "nodeID": "cmh9z28lh0g8f07xvht1z9v76",
+          "data": {
+            "agentID": "6900301c07164c00076103b0",
+            "listenForOtherTriggers": false,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "6900301c07164c00076103c5": {
+                  "id": "6900301c07164c00076103c5",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1673.69,
+                          717.35
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          1064.1,
+                          717.35
+                        ]
+                      },
+                      {
+                        "point": [
+                          1064.1,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          454.51,
+                          -394.48
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  },
+                  "target": "cmh9z28lh0g8207xve8v80dx6"
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8207xve8v80dx6": {
+          "type": "block",
+          "coords": [
+            289.5052409436403,
+            -421.4842771690785
+          ],
+          "nodeID": "cmh9z28lh0g8207xve8v80dx6",
+          "data": {
+            "name": "Welcome and navigation options",
+            "color": "#A1ADBA",
+            "steps": [
+              "cmh9z28lh0g8907xv8ws5813x"
+            ],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8307xvdcvharao": {
+          "type": "block",
+          "coords": [
+            860,
+            0
+          ],
+          "nodeID": "cmh9z28lh0g8307xvdcvharao",
+          "data": {
+            "name": "Present career history",
+            "color": "#5b9fd7",
+            "steps": [
+              "cmh9z28lh0g8a07xv2g6mav9z"
+            ],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8407xvalg1elu2": {
+          "type": "block",
+          "coords": [
+            854.72697911337,
+            564.6326601574458
+          ],
+          "nodeID": "cmh9z28lh0g8407xvalg1elu2",
+          "data": {
+            "name": "Present skills & competencies",
+            "color": "#5b9fd7",
+            "steps": [
+              "cmh9z28lh0g8b07xvbkcafp4d"
+            ],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8507xvfk0kh9j2": {
+          "type": "block",
+          "coords": [
+            847.5346765292124,
+            1102.487270089884
+          ],
+          "nodeID": "cmh9z28lh0g8507xvfk0kh9j2",
+          "data": {
+            "name": "Present project portfolio",
+            "color": "#5b9fd7",
+            "steps": [
+              "cmh9z28lh0g8c07xv83jm365k"
+            ],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {},
+              "dynamic": []
+            },
+            "triggers": []
+          }
+        },
+        "cmh9z28lh0g8607xv3f8k645i": {
+          "type": "block",
+          "coords": [
+            1588.5946890397288,
+            184.7420119879767
+          ],
+          "nodeID": "cmh9z28lh0g8607xv3f8k645i",
+          "data": {
+            "name": "Slide deck opened successfully",
+            "color": "#56b365",
+            "steps": [
+              "cmh9z28lh0g8d07xv4ekihhgy"
+            ],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {},
+              "dynamic": []
+            },
+            "triggers": []
+          }
+        },
+        "cmh9z28lh0g8707xv10y26x6d": {
+          "type": "block",
+          "coords": [
+            866.906930417138,
+            1737.1464385347226
+          ],
+          "nodeID": "cmh9z28lh0g8707xv10y26x6d",
+          "data": {
+            "name": "Schedule interview or discuss next steps",
+            "color": "#5b9fd7",
+            "steps": [
+              "cmh9z28lh0g8e07xv3ccred2m"
+            ],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "cmh9z28lh0g8807xvgv3j6u43": {
+          "type": "block",
+          "coords": [
+            1839.6857448080066,
+            500.34989535583543
+          ],
+          "nodeID": "cmh9z28lh0g8807xvgv3j6u43",
+          "data": {
+            "name": "Interview scheduled successfully",
+            "color": "#56b365",
+            "steps": [
+              "cmh9z28lh0g8f07xvht1z9v76"
+            ],
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {},
+              "dynamic": []
+            }
+          }
+        },
+        "6900366e03118e6ccb28fe25": {
+          "type": "carousel",
+          "data": {
+            "name": "Card",
+            "cards": [
+              {
+                "id": "r4ub3v5a",
+                "title": "Jason Davey's Conversational Design Portfolio",
+                "description": [
+                  {
+                    "children": [
+                      {
+                        "text": "This portfolio presents design case studies, AI integration projects & service design transformation projects. For more detailed case studies, please visit my "
+                      },
+                      {
+                        "url": "https://jasdavey.myportfolio.com/",
+                        "type": "link",
+                        "children": [
+                          {
+                            "text": "online portfolio",
+                            "color": {
+                              "r": 93,
+                              "g": 157,
+                              "b": 245,
+                              "a": 1
+                            },
+                            "underline": true
+                          }
+                        ]
+                      },
+                      {
+                        "text": ""
+                      }
+                    ]
+                  }
+                ],
+                "imageUrl": "",
+                "buttons": []
+              },
+              {
+                "id": "y111l3vdk",
+                "title": "Project #1: Westpac Next Best Action program (2016)",
+                "description": [
+                  {
+                    "children": [
+                      {
+                        "text": "My first Conversational design project...I was design lead on the Next Best Action program. Responsible for "
+                      },
+                      {
+                        "text": "developing the flow of the script ",
+                        "fontWeight": "700"
+                      },
+                      {
+                        "text": "and presentation of assets via Pega Systems software. It was the early strategic design work that would see the Executive Management Team struggle to empower Pega over the next 5 years."
+                      }
+                    ]
+                  },
+                  {
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "children": [
+                      {
+                        "text": "The un-intended outcome can be "
+                      },
+                      {
+                        "url": "https://www.mi-3.com.au/15-03-2024/westpacs-moment-was-70m-decisioning-flop-has-left-it-years-behind-its",
+                        "type": "link",
+                        "children": [
+                          {
+                            "text": "viewed here",
+                            "color": {
+                              "r": 93,
+                              "g": 157,
+                              "b": 245,
+                              "a": 1
+                            },
+                            "underline": true
+                          }
+                        ]
+                      },
+                      {
+                        "text": "..."
+                      }
+                    ]
+                  }
+                ],
+                "imageUrl": "https://cm4-production-assets.s3.amazonaws.com/1761623204327-westpac-nba.png",
+                "buttons": []
+              },
+              {
+                "id": "yq11x3vb6",
+                "title": "Project #2: Security Bank Philippines chatbot (2020)",
+                "description": [
+                  {
+                    "children": [
+                      {
+                        "text": "Conversation Design (via Google Dialogflow) enabled the Security Bank Philippines (2020) project to deliver a 24/7 chatbot reducing call centre volume by 42% while maintaining high customer satisfaction. The system handled over 10,000 daily interactions with natural language processing capabilities. "
+                      }
+                    ]
+                  },
+                  {
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "children": [
+                      {
+                        "text": "[Onward from our initial strategic design & development, in 2023, "
+                      },
+                      {
+                        "url": "https://www.securitybank.com/news/security-banks-customer-focus-lauded-with-two-recognitions-at-the-digital-cx-awards/?utm_source=chatgpt.com",
+                        "type": "link",
+                        "children": [
+                          {
+                            "text": "SBC won 2 x CX Awards ",
+                            "color": {
+                              "r": 93,
+                              "g": 157,
+                              "b": 245,
+                              "a": 1
+                            },
+                            "underline": true
+                          }
+                        ]
+                      },
+                      {
+                        "text": "for it's customer chatbot service...]"
+                      }
+                    ]
+                  }
+                ],
+                "imageUrl": "https://cm4-production-assets.s3.amazonaws.com/1761651775402-flexuichat.png",
+                "buttons": []
+              },
+              {
+                "id": "l41273vip",
+                "title": "Project #3: Service Bricks AI automation & multi-agent chaining (2024)",
+                "description": [
+                  {
+                    "children": [
+                      {
+                        "text": "Service Design was the focus of the "
+                      },
+                      {
+                        "url": "https://service-bricks.ai/",
+                        "type": "link",
+                        "children": [
+                          {
+                            "text": "Service Bricks AI (2024)",
+                            "color": {
+                              "r": 93,
+                              "g": 157,
+                              "b": 245,
+                              "a": 1
+                            },
+                            "underline": true
+                          }
+                        ]
+                      },
+                      {
+                        "text": " represented a breakthrough in AI-powered service design, helping teams with automated journey mapping and intelligent pattern recognition, reducing research time by 65% across client projects."
+                      }
+                    ]
+                  }
+                ],
+                "imageUrl": "https://cm4-production-assets.s3.amazonaws.com/1761652267570-service-bricks-ai.png",
+                "buttons": []
+              },
+              {
+                "id": "ga12h3v0t",
+                "title": "Project #4: Greenstone Financial Services - Innovation Practice (2025)",
+                "description": [
+                  {
+                    "children": [
+                      {
+                        "text": "The real transformation was developing an "
+                      },
+                      {
+                        "url": "https://jasdavey.myportfolio.com/aiux-innovation-practice",
+                        "type": "link",
+                        "children": [
+                          {
+                            "text": "innovation program for Greenstone Financial Services",
+                            "color": {
+                              "r": 93,
+                              "g": 157,
+                              "b": 245,
+                              "a": 1
+                            },
+                            "underline": true
+                          }
+                        ]
+                      },
+                      {
+                        "text": ".\n\nThis is, this year, where I founded an AI and UX innovation practice that fundamentally changed how the organization, approaches digital transformation."
+                      }
+                    ]
+                  }
+                ],
+                "imageUrl": "https://cm4-production-assets.s3.amazonaws.com/1761652938197-aotp-video-1.png",
+                "buttons": []
+              }
+            ],
+            "layout": "Carousel",
+            "portsV2": {
+              "byKey": {},
+              "builtIn": {
+                "next": {
+                  "type": "next",
+                  "target": null,
+                  "id": "6900366e03118e6ccb28fe26"
+                },
+                "else": {
+                  "type": "else",
+                  "target": null,
+                  "id": "6900366e03118e6ccb28fe27"
+                },
+                "no-reply": {
+                  "target": null
+                }
+              },
+              "dynamic": []
+            }
+          },
+          "nodeID": "6900366e03118e6ccb28fe25"
+        },
+        "6900366e03118e6ccb28fe28": {
+          "type": "block",
+          "data": {
+            "name": "Portfolio",
+            "steps": [
+              "6900366e03118e6ccb28fe25",
+              "6900447903118e6ccb28fea4"
+            ],
+            "color": "#56b365",
+            "triggers": []
+          },
+          "nodeID": "6900366e03118e6ccb28fe28",
+          "coords": [
+            1584.4879894069518,
+            -842.9224442031034
+          ]
+        },
+        "6900447903118e6ccb28fea4": {
+          "type": "agent",
+          "data": {
+            "name": "Untitled agent",
+            "agentID": "6900447e2205eea1947ca385",
+            "listenForOtherTriggers": true,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "690159b602b15bc7a48d1338": {
+                  "id": "690159b7ad4657019c513803",
+                  "target": "cmh9z28lh0g8207xve8v80dx6",
+                  "type": "",
+                  "data": {}
+                },
+                "690159cf02b15bc7a48d133e": {
+                  "id": "690159cfad4657019c513805",
+                  "target": "cmh9z28lh0g8707xv10y26x6d",
+                  "type": "",
+                  "data": {}
+                },
+                "690159f602b15bc7a48d1357": {
+                  "id": "690159f6ad4657019c513807",
+                  "target": "cmh9z28lh0g8407xvalg1elu2",
+                  "type": "",
+                  "data": {}
+                },
+                "69015aab02b15bc7a48d137d": {
+                  "id": "69015aacad4657019c513809",
+                  "target": "cmh9z28lh0g8207xve8v80dx6",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          1416.95,
+                          69.16
+                        ],
+                        "reversed": true
+                      },
+                      {
+                        "point": [
+                          935.73,
+                          69.16
+                        ]
+                      },
+                      {
+                        "point": [
+                          935.73,
+                          -394.48
+                        ]
+                      },
+                      {
+                        "point": [
+                          454.51,
+                          -394.48
+                        ],
+                        "reversed": true,
+                        "allowedToTop": true
+                      }
+                    ]
+                  }
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          },
+          "nodeID": "6900447903118e6ccb28fea4",
+          "coords": [
+            0,
+            0
+          ]
+        },
+        "69004bc003118e6ccb28fede": {
+          "type": "agent",
+          "data": {
+            "name": "Untitled agent",
+            "agentID": "69004be32205eea1947ca4b6",
+            "listenForOtherTriggers": true,
+            "exitEveryConversationalTurn": false,
+            "portsV2": {
+              "byKey": {
+                "69004c842205eea1947ca4d1": {
+                  "id": "69004c8403118e6ccb28fee4",
+                  "target": "cmh9z28lh0g8307xvdcvharao",
+                  "type": "",
+                  "data": {}
+                },
+                "69004e112205eea1947ca517": {
+                  "id": "69004e1103118e6ccb28fefe",
+                  "target": "cmh9z28lh0g8207xve8v80dx6",
+                  "type": "",
+                  "data": {}
+                },
+                "69004e202205eea1947ca518": {
+                  "id": "69004e2003118e6ccb28ff00",
+                  "target": "cmh9z28lh0g8407xvalg1elu2",
+                  "type": "",
+                  "data": {}
+                },
+                "69004e2c2205eea1947ca51b": {
+                  "id": "69004e2c03118e6ccb28ff02",
+                  "target": "cmh9z28lh0g8707xv10y26x6d",
+                  "type": "",
+                  "data": {}
+                },
+                "69004e612205eea1947ca52b": {
+                  "id": "69004e6103118e6ccb28ff04",
+                  "target": "6900366e03118e6ccb28fe28",
+                  "type": "",
+                  "data": {
+                    "points": [
+                      {
+                        "point": [
+                          400.9,
+                          1303.13
+                        ]
+                      },
+                      {
+                        "point": [
+                          909.42,
+                          1303.13
+                        ]
+                      },
+                      {
+                        "point": [
+                          909.42,
+                          -812.84
+                        ]
+                      },
+                      {
+                        "point": [
+                          1417.95,
+                          -812.84
+                        ],
+                        "allowedToTop": true
+                      }
+                    ]
+                  }
+                }
+              },
+              "builtIn": {},
+              "dynamic": []
+            }
+          },
+          "nodeID": "69004bc003118e6ccb28fede"
+        },
+        "69004bc003118e6ccb28fedf": {
+          "type": "block",
+          "data": {
+            "name": "Present Virtual Assistant Analysis slide deck",
+            "steps": [
+              "69004bc003118e6ccb28fede"
+            ],
+            "color": "#5b9fd7",
+            "triggers": []
+          },
+          "nodeID": "69004bc003118e6ccb28fedf",
+          "coords": [
+            234.89719493506342,
+            800.1289399640991
+          ]
+        }
+      },
+      "offsetX": 560,
+      "offsetY": 300,
+      "modified": 1761619968,
+      "variables": [],
+      "creatorID": 1769813,
+      "_id": "6900301cf30d3ce66977fc8a",
+      "diagramID": "6900301c07164c00076103c6",
+      "versionID": "6900301cf30d3ce66977fc88"
+    }
+  },
+  "flows": [],
+  "entities": [],
+  "entityVariants": [],
+  "intents": [
+    {
+      "id": "None",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "None",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "description": null,
+      "automaticReprompt": false,
+      "entityOrder": [],
+      "automaticRepromptSettings": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    }
+  ],
+  "utterances": [],
+  "requiredEntities": [],
+  "folders": [],
+  "responses": [],
+  "responseMessages": [],
+  "responseDiscriminators": [],
+  "variables": [
+    {
+      "id": "sessions",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "sessions",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "number",
+      "description": "The number of times a particular user has opened the app.",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "user_id",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "user_id",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "text",
+      "description": "The user's unique ID.",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "timestamp",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "timestamp",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "text",
+      "description": "UNIX timestamp (number of seconds since January 1st, 1970 at UTC).",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "platform",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "platform",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "text",
+      "description": "The platform your agent is running on (e.g. \"voiceflow\").",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "locale",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "locale",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "text",
+      "description": "The locale of the user (eg. en-US, en-CA, it-IT, fr-FR, ...).",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "intent_confidence",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "intent_confidence",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "number",
+      "description": "The confidence interval (measured as a value from 0 to 100) for the most recently matched intent.",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "last_response",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "last_response",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "text",
+      "description": "The agent's last response (text/speak) in a string.",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "last_event",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "last_event",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "any",
+      "description": "The object containing the last event that the user client has triggered.",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "last_utterance",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "last_utterance",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "text",
+      "description": "The user's last utterance in a text string.",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "id": "vf_memory",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "vf_memory",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "color": "#515A63",
+      "isArray": false,
+      "isSystem": true,
+      "datatype": "text",
+      "description": "Last 10 user inputs and agent responses in a string (e.g. \"agent: How can i help?\"\nuser: What's the weather today?).",
+      "defaultValue": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z",
+      "updatedByID": 1769813
+    }
+  ],
+  "workflows": [
+    {
+      "id": "66df755be937eb000784abb2",
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "name": "Start workflow",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "status": null,
+      "isStart": true,
+      "diagramID": "6900301c07164c00076103c6",
+      "assigneeID": null,
+      "description": "",
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-29T01:47:24.000Z",
+      "updatedByID": 1769813
+    }
+  ],
+  "cardButtons": [],
+  "attachments": [],
+  "prompts": [],
+  "promptMessages": [],
+  "events": [],
+  "agents": [
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103aa",
+      "name": "Welcome and navigation options",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {
+        "model": "claude-4-sonnet",
+        "maxTokens": 5000,
+        "temperature": 0.3,
+        "reasoningEffort": null
+      },
+      "description": null,
+      "instructions": [
+        {
+          "text": [
+            "1. Greet the user warmly as NAB’s Virtual HR Assistant.\n2. Introduce Jason Davey’s application for the Conversation Design Consultant role, emphasizing a friendly and approachable tone.\n3. Explain that you can assist them in exploring his background and qualifications.\n4. Utilize SSML mode instructions to prevent the voice agent from reading icons or emojis. For example, you may use the <speak> tag to ensure proper pronunciation and clarity, avoiding the detailed reading of non-verbal elements.\n5. Present four clear buttons for the user to choose from:\n   - View career history\n   - Skills & Competencies\n   - Project portfolio\n   - Virtual Assistant Analysis"
+          ]
+        },
+        {
+          "text": [
+            "6. Keep all responses succinct and brief enough to hold interest and continue engagement\n7. Wait for the user's selection before continuing, and maintain a patient and supportive demeanor throughout the interaction."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "6900301c07164c00076103b1",
+        "6900301c07164c00076103b2",
+        "6900301c07164c00076103b3",
+        "6900301c07164c00076103b4",
+        "6900482a2205eea1947ca421"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": null,
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-30T23:39:24.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103ab",
+      "name": "Present career history",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {
+        "model": "claude-4-sonnet",
+        "maxTokens": 5000,
+        "temperature": 0.3,
+        "reasoningEffort": null
+      },
+      "description": null,
+      "instructions": [
+        {
+          "text": [
+            "Share Jason Davey’s career highlights: He has held leadership positions across major financial and service organisations, specializing in service design, AI integration, and experience strategy. At Insyteful Limited and previously Greenstone Financial Services, he blended human-centered design with AI-driven tools for strategic outcomes. Ask if the user would like to view his skills & competencies or project portfolio or Virutal Assistant Analysis slide deck."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "6900301c07164c00076103b5",
+        "6900301c07164c00076103b6",
+        "6900301c07164c00076103b7",
+        "6900301c07164c00076103b8",
+        "69004ae22205eea1947ca496"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": {
+        "enabled": true,
+        "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+      },
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T04:47:31.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103ac",
+      "name": "Present skills & competencies",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {
+        "model": "claude-4-sonnet",
+        "maxTokens": 5000,
+        "temperature": 0.3,
+        "reasoningEffort": null
+      },
+      "description": null,
+      "instructions": [
+        {
+          "text": [
+            "## Chat Agent Instructions\n\n1. **Introduction**\n   - Greet the user warmly and introduce yourself succinctly.\n\n2. **Core Skills and Competencies**\n   - Outline Jason Davey’s core skills and competencies, emphasizing the following:\n     - Conversational design and multi-agent orchestration\n     - AI UX strategy and service design thinking\n     - Proficiency with Voiceflow, v0.dev, MCP, Figma, Chronicle, Miro, and Pickaxe\n     - Empathy-led, outcome-driven behavioral design\n     - Experience in deploying enterprise HR/L&D and SME decision-systems\n\n3. **SSML Integration**\n   - When discussing any content that may include icons or emojis, use SSML code to prevent the voice agent from reading them aloud. Ensure the conversation flows naturally without interruptions caused by icons or emojis.\n\n4. **User Engagement**\n   - Ask the user if they would like to see Jason's project portfolio, career history, or the Virtual Assistant Analysis slide deck. Provide options clearly and wait for the user's response.\n\n5. **Conversational Style**\n   - Maintain a friendly and professional tone throughout the conversation.\n   - Be engaging and ensure the user feels heard and valued.\n   - Use simple language and avoid jargon unless necessary, explaining terms as needed."
+          ]
+        },
+        {
+          "text": [
+            "   - Keep all responses succinct and brief enough to hold interest and continue engagement.\n\n6. **Assistance and Follow-up**\n   - Be ready to assist with any additional questions the user may have, offering further information or clarification on previous topics. Offer relative buttons for the user to select\n\n7. **Closure**\n   - Thank the user for their interaction and encourage them to reach out again if they have more questions in the future."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "6900301c07164c00076103b9",
+        "6900301c07164c00076103ba",
+        "6900301c07164c00076103bb",
+        "6900301c07164c00076103bc",
+        "69004b4b2205eea1947ca4a4"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": {
+        "enabled": true,
+        "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+      },
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-30T23:41:02.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103ad",
+      "name": "Present project portfolio",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {
+        "model": "claude-4-sonnet",
+        "maxTokens": 5000,
+        "temperature": 0.3,
+        "reasoningEffort": null
+      },
+      "description": "",
+      "instructions": [
+        {
+          "text": [
+            "1. Introduce the chat by presenting Jason Davey’s project portfolio, which is available as a carousel within the chat window.\n\n2. Before displaying the portfolio, use SSML to ensure that any icons or emojis are not read aloud by the voice agent. Utilize appropriate SSML tags to suppress these elements for a smooth auditory experience.\n\n3. Ask the user if they would like to (offer buttons for the user to select):\n   - Review the portfolio.\n   - Return to the career history.\n   - Go to skills & competencies.\n   - View the Virtual Assistant Analysis slide deck.\n\n4. Make sure to maintain a friendly and professional tone throughout the conversation. Aim for clarity and ensure the user feels guided in making their choice. Keep all responses succinct and brief enough to hold interest and continue engagement\n\n5. Be responsive to the user's input and adjust the conversation flow based on their preferences. \n\n6. Always offer to help the user navigate through options again, ensuring a positive and engaging interaction."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "6900301c07164c00076103be",
+        "6900301c07164c00076103bf",
+        "6900301c07164c00076103c0",
+        "6900301c07164c00076103c1",
+        "69004b842205eea1947ca4ab"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": {
+        "enabled": true,
+        "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+      },
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-30T23:41:18.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103ae",
+      "name": "Slide deck opened successfully",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {
+        "model": "claude-4-sonnet",
+        "maxTokens": 5000,
+        "temperature": 0.3,
+        "reasoningEffort": null
+      },
+      "description": null,
+      "instructions": [
+        {
+          "text": [
+            "**Chat Agent Instructions:**\n\n1. **Confirmation Response:**\n   - When a user requests access to the slide deck, respond with a clear confirmation that the slide deck is available. Use the following phrasing:\n     - \"The slide deck is now available via the link provided or via the embedded carousel.\"\n\n2. **SSML Code Integration:**\n   - Implement SSML code to prevent the voice agent from reading icons or emojis. Use the `<speak>` tag to encapsulate your response and ensure non-verbal elements are not pronounced. For example:\n     - `<speak>The slide deck is now available via the link provided or via the embedded carousel.</speak>`\n   - This SSML structure should be used for any voice output to prevent misinterpretation of visual elements.\n\n3. **Closing Note:**\n   - After confirming the availability of the slide deck, offer a closing note to encourage further interaction:\n     - \"Let me know if you'd like to revisit another section or need interview coordination.\""
+          ]
+        },
+        {
+          "text": [
+            "     - Offer buttons for the user to select next or other options\n   \n4. **Conversational Style:**\n   - Maintain a friendly and helpful demeanor throughout the interaction. Use a tone that is professional yet approachable to make the user feel comfortable.\n\n5. **Clarity and Brevity:**\n   - Ensure that responses are clear, concise, and straightforward. Avoid unnecessary jargon or complexity.\n\nBy following these structured instructions, the chat agent will provide accurate information while ensuring a pleasant user experience."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "6900301c07164c00076103c2"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": {
+        "enabled": true,
+        "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+      },
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": {
+        "enabled": true,
+        "description": "Displays a carousel of up to 10 cards, each containing a title, description, image, and optional action buttons."
+      },
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-30T23:43:56.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103af",
+      "name": "Schedule interview or discuss next steps",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {
+        "model": "claude-4-sonnet",
+        "maxTokens": 5000,
+        "temperature": 0.3,
+        "reasoningEffort": null
+      },
+      "description": null,
+      "instructions": [
+        {
+          "text": [
+            "1. **Conversational Style and Personality**:\n   - Maintain a professional and friendly tone throughout the conversation.\n   - Be polite and encouraging, making the user feel comfortable sharing their preferences and questions.\n   - Use a clear and concise manner of speaking, ensuring information is easily understood.\n\n2. **Handling Scheduling Requests**:\n   - If the user inquires about scheduling an interview or asks for next steps, acknowledge their request promptly.\n   - Politely invite the user to provide their preferred dates and times for the interview with Jason Davey.\n   - Once the user provides their preferences, confirm that you will arrange the meeting and send a calendar invite once it is confirmed.\n\n3. **Incorporating SSML**:\n   - Utilize SSML coding to manage the reading of text, specifically to prevent the reading of icons or emojis. For instance, use <speak> tags to segment spoken elements and avoid pronunciation errors related to non-verbal symbols. \n   - When encountering icons or emojis, ensure they are handled appropriately by either skipping them or indicating their presence in a manner that does not disrupt the flow of the conversation. \n\n4. **Additional Considerations**:\n   - Always be prepared to assist the user with any follow-up questions they may have regarding the scheduling process or any other related queries. Offer buttons for the user to select next or other options.\n   - Ensure that all responses maintain a high level of professionalism and are tailored to fit the context of the user's request. Keep all responses succinct and brief enough to hold interest and continue engagement."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "6900301c07164c00076103c3",
+        "6900301c07164c00076103c4"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": null,
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-30T23:42:20.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b0",
+      "name": "Interview scheduled successfully",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {
+        "model": "claude-4-sonnet",
+        "maxTokens": 5000,
+        "temperature": 0.3,
+        "reasoningEffort": null
+      },
+      "description": null,
+      "instructions": [
+        {
+          "text": [
+            "**Chat Agent Instructions:**\n\n1. **Confirmation of Schedule:**\n   - Begin by confirming to the user that the interview with Jason Davey has been scheduled according to their provided preferences.\n   - Use a clear and concise tone to ensure the user understands the confirmation.\n\n2. **Express Gratitude:**\n   - Thank the user for their input and engagement in the scheduling process.\n   - Make the gratitude feel genuine to reinforce a positive interaction.\n\n3. **Offer Further Assistance:**\n   - Politely offer to return to the candidate's profile for further exploration if the user desires it.\n   - Use inviting language to encourage user interaction and exploration of additional options. Offer buttons to the user for next or other options\n\n4. **SSML Integration:**\n   - Incorporate SSML code in your responses to prevent the voice agent from attempting to read icons or emojis.\n   - Structure responses clearly to ensure the voice agent delivers an effective and smooth auditory experience without confusion."
+          ]
+        },
+        {
+          "text": [
+            "   - Keep all responses succinct and brief enough to hold interest and continue engagement\n\nBy following these instructions, the chat agent will provide a seamless, user-friendly interaction while effectively managing the conversation's tone and style."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "6900301c07164c00076103c5"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": null,
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-30T23:44:36.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900447e2205eea1947ca385",
+      "name": "Project Portfolio opened successfully",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {},
+      "description": "",
+      "instructions": [
+        {
+          "text": [
+            "### Chat Agent Instructions\n\n1. **Greeting and Introduction**: Start the conversation with a warm and friendly tone to make the user feel welcome. \n\n2. **Confirm Availability**: \n   - State clearly that the project portfolio is now available via the embedded carousel. Ensure to communicate this with clarity and enthusiasm.\n   - Example: \"I'm excited to let you know that your project portfolio is now available! You can explore it through the embedded carousel.\"\n\n3. **SSML Integration**: \n   - Incorporate SSML code to manage how the voice agent reads the text. Specifically, ensure that the agent does not read icons or emojis. Use appropriate tags to achieve this.\n   - For instance, when presenting the carousel or any sections, make sure to include `<speak>` and `<prosody>` tags as needed to modify speech output.\n\n4. **Closing Note**:\n   - Conclude the conversation by inviting further interaction. Use the phrase: \n   - \"Let me know if you'd like to revisit another section or need interview coordination.\""
+          ]
+        },
+        {
+          "text": [
+            "   - Offer buttons for the user to select for next or other options\n\n5. **Conversational Style**:\n   - Maintain a conversational and approachable tone throughout the interaction.\n   - Be concise and informative, direct the user promptly to their needs, and provide assistance when required. \n\n6. **Be Attentive**: \n   - Listen carefully to the user's requests and respond appropriately, ensuring they feel heard and understood.\n\n7. **Feedback Loop**: Encourage the user to ask questions or request clarifications at any point during the conversation to promote engagement.\n\n### Example of SSML Code Integration:\n```xml\n<speak>\n  <prosody rate=\"medium\">\n    I'm excited to let you know that your project portfolio is now available! You can explore it through the embedded carousel.\n  </prosody>\n</speak>\n```\n\n### Note:\nEnsure that the delivery of information is clear and that all interactions adhere to the guidelines set for clarity and user engagement."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "690159b602b15bc7a48d1338",
+        "690159cf02b15bc7a48d133e",
+        "690159f602b15bc7a48d1357",
+        "69015aab02b15bc7a48d137d"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": {
+        "enabled": true,
+        "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+      },
+      "buttonTool": null,
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": null,
+      "createdAt": "2025-10-28T04:20:14.000Z",
+      "updatedAt": "2025-10-30T23:43:20.000Z",
+      "updatedByID": 1769813
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004be32205eea1947ca4b6",
+      "name": "Present Virtual Assistant Analysis slide deck",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "createdByID": 1769813,
+      "folderID": null,
+      "settings": {},
+      "description": "",
+      "instructions": [
+        {
+          "text": [
+            "1. Present the Virtual Assistants Analysis slide deck using a clear and conversational tone.  \n   - Always offer the link to the Analysis slide deck: NAB Virtual Assistant Analysis – Jason Davey: Conversation Design Consultant.  \n     (The link is: https://drive.google.com/file/d/16zn8SfJMT1LBxjsiLGWIb3IYgiqc1I-W/view?usp=drive_link)  \n   - Ask if the user would like to open the deck now, or return to career history, skills & competencies, or open the project portfolio.\n\n2. When delivering information, use SSML code/structure to prevent reading of icons or emojis.  \n   - Example SSML for silencing emojis: `<speak>Here is your information. <break time=\"500ms\"/> Please take a look.</speak>`  \n   - Ensure the use of appropriate pauses and breaks in the SSML to maintain a conversational and natural flow.\n\n3. Maintain a friendly and engaging personality, encouraging the user to interact further and explore additional options available to them. Keep all responses succinct and brief enough to hold interest and continue engagement."
+          ]
+        },
+        {
+          "text": [
+            {
+              "text": [
+                ""
+              ]
+            }
+          ]
+        },
+        {
+          "text": [
+            "4. Ber sure to reference the document (uploaded in the knowledge base - 'Strategic Analysis NAB Virtual Assistant Capability_sm.pdf') if the user requests information about the analysis."
+          ]
+        }
+      ],
+      "pathToolOrder": [
+        "69004c842205eea1947ca4d1",
+        "69004e112205eea1947ca517",
+        "69004e202205eea1947ca518",
+        "69004e2c2205eea1947ca51b",
+        "69004e612205eea1947ca52b"
+      ],
+      "webSearchTool": null,
+      "knowledgeBaseTool": {
+        "enabled": true,
+        "description": "Searches an external knowledge base to retrieve relevant information, supplementing or replacing the language model's internal context."
+      },
+      "buttonTool": {
+        "enabled": true,
+        "description": "Displays a UI picker when the user needs to select one option from a predefined list (up to 5 options)."
+      },
+      "cardTool": null,
+      "carouselTool": null,
+      "callForwardTool": {
+        "address": [
+          {
+            "text": [
+              ""
+            ]
+          }
+        ],
+        "enabled": false,
+        "addressType": "phone",
+        "description": "Forwards the call to a different number or extension."
+      },
+      "createdAt": "2025-10-28T04:51:47.000Z",
+      "updatedAt": "2025-10-30T23:39:39.000Z",
+      "updatedByID": 1769813
+    }
+  ],
+  "agentAPITools": [],
+  "agentPathTools": [
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b1",
+      "updatedByID": 1769813,
+      "name": "User selects career history",
+      "agentID": "6900301c07164c00076103aa",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user chooses to view Jason's career history.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b2",
+      "updatedByID": 1769813,
+      "name": "User selects skills and competencies",
+      "agentID": "6900301c07164c00076103aa",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to learn about Jason's skills and competencies.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b3",
+      "updatedByID": 1769813,
+      "name": "User selects project portfolio",
+      "agentID": "6900301c07164c00076103aa",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user chooses to explore the project portfolio.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b4",
+      "updatedByID": 1769813,
+      "name": "User asks about scheduling or next steps",
+      "agentID": "6900301c07164c00076103aa",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to schedule an interview or about next steps.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b5",
+      "updatedByID": 1769813,
+      "name": "User wants skills and competencies",
+      "agentID": "6900301c07164c00076103ab",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user decides to see skills and competencies.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b6",
+      "updatedByID": 1769813,
+      "name": "User wants project portfolio",
+      "agentID": "6900301c07164c00076103ab",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to view the project portfolio.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b7",
+      "updatedByID": 1769813,
+      "name": "User wants to return to start",
+      "agentID": "6900301c07164c00076103ab",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to go back to the main options.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b8",
+      "updatedByID": 1769813,
+      "name": "User asks about scheduling or next steps",
+      "agentID": "6900301c07164c00076103ab",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to schedule an interview or about next steps.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103b9",
+      "updatedByID": 1769813,
+      "name": "User wants project portfolio",
+      "agentID": "6900301c07164c00076103ac",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user chooses to view the project portfolio.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103ba",
+      "updatedByID": 1769813,
+      "name": "User wants career history",
+      "agentID": "6900301c07164c00076103ac",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user decides to return to career history.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103bb",
+      "updatedByID": 1769813,
+      "name": "User wants to return to start",
+      "agentID": "6900301c07164c00076103ac",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to go back to the main options.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103bc",
+      "updatedByID": 1769813,
+      "name": "User asks about scheduling or next steps",
+      "agentID": "6900301c07164c00076103ac",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to schedule an interview or about next steps.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103be",
+      "updatedByID": 1769813,
+      "name": "User wants career history",
+      "agentID": "6900301c07164c00076103ad",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user decides to review Jason’s career history.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103bf",
+      "updatedByID": 1769813,
+      "name": "User wants skills and competencies",
+      "agentID": "6900301c07164c00076103ad",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to see skills and competencies.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103c0",
+      "updatedByID": 1769813,
+      "name": "User wants to return to start",
+      "agentID": "6900301c07164c00076103ad",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to go back to the main options.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103c1",
+      "updatedByID": 1769813,
+      "name": "User asks about scheduling or next steps",
+      "agentID": "6900301c07164c00076103ad",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to schedule an interview or about next steps.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103c2",
+      "updatedByID": 1769813,
+      "name": "End of journey",
+      "agentID": "6900301c07164c00076103ae",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user might want to return to the main menu. If not, end the flow here.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103c3",
+      "updatedByID": 1769813,
+      "name": "User provides availability",
+      "agentID": "6900301c07164c00076103af",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user shares suggested date/time options for an interview.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103c4",
+      "updatedByID": 1769813,
+      "name": "User cancels scheduling",
+      "agentID": "6900301c07164c00076103af",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user decides not to proceed with scheduling.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900301c07164c00076103c5",
+      "updatedByID": 1769813,
+      "name": "End of journey",
+      "agentID": "6900301c07164c00076103b0",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user may want to navigate further. If not, end here.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T02:53:16.000Z",
+      "updatedAt": "2025-10-28T02:53:16.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "6900482a2205eea1947ca421",
+      "updatedByID": 1769813,
+      "name": "User asks about Virtual Assistant Analysis",
+      "agentID": "6900301c07164c00076103aa",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to view or know more about the Virtual Assistant Analysis",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T04:35:54.000Z",
+      "updatedAt": "2025-10-28T04:37:10.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004ae22205eea1947ca496",
+      "updatedByID": 1769813,
+      "name": "User asks about Virtual Assistant Analysis",
+      "agentID": "6900301c07164c00076103ab",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to view or know more about the Virtual Assistant Analysis",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T04:47:31.000Z",
+      "updatedAt": "2025-10-28T04:48:47.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004b4b2205eea1947ca4a4",
+      "updatedByID": 1769813,
+      "name": "User asks about Virtual Assistant Analysis",
+      "agentID": "6900301c07164c00076103ac",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to view or know more about the Virtual Assistant Analysis",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T04:49:16.000Z",
+      "updatedAt": "2025-10-28T04:49:43.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004b842205eea1947ca4ab",
+      "updatedByID": 1769813,
+      "name": "User asks about Virtual Assistant Analysis",
+      "agentID": "6900301c07164c00076103ad",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to view or know more about the Virtual Assistant Analysis",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T04:50:12.000Z",
+      "updatedAt": "2025-10-28T04:50:25.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004c842205eea1947ca4d1",
+      "updatedByID": 1769813,
+      "name": "User wants career history",
+      "agentID": "69004be32205eea1947ca4b6",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user decides to review Jason’s career history.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T04:54:28.000Z",
+      "updatedAt": "2025-10-28T05:01:04.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004e112205eea1947ca517",
+      "updatedByID": 1769813,
+      "name": "User wants to return to start",
+      "agentID": "69004be32205eea1947ca4b6",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to go back to the main options.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T05:01:05.000Z",
+      "updatedAt": "2025-10-28T05:01:18.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004e202205eea1947ca518",
+      "updatedByID": 1769813,
+      "name": "User wants skills and competencies",
+      "agentID": "69004be32205eea1947ca4b6",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to see skills and competencies.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T05:01:21.000Z",
+      "updatedAt": "2025-10-28T05:01:32.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004e2c2205eea1947ca51b",
+      "updatedByID": 1769813,
+      "name": "User asks about scheduling or next steps",
+      "agentID": "69004be32205eea1947ca4b6",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to schedule an interview or about next steps.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T05:01:33.000Z",
+      "updatedAt": "2025-10-28T05:01:51.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69004e612205eea1947ca52b",
+      "updatedByID": 1769813,
+      "name": "User wants project portfolio",
+      "agentID": "69004be32205eea1947ca4b6",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user chooses to view the project portfolio.",
+      "variableOrder": [],
+      "createdAt": "2025-10-28T05:02:25.000Z",
+      "updatedAt": "2025-10-28T05:02:35.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "690159b602b15bc7a48d1338",
+      "updatedByID": 1769813,
+      "name": "User wants to return to start",
+      "agentID": "6900447e2205eea1947ca385",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to go back to the main options.",
+      "variableOrder": [],
+      "createdAt": "2025-10-29T00:03:03.000Z",
+      "updatedAt": "2025-10-29T00:03:15.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "690159cf02b15bc7a48d133e",
+      "updatedByID": 1769813,
+      "name": "User asks about scheduling or next steps",
+      "agentID": "6900447e2205eea1947ca385",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user asks to schedule an interview or about next steps.",
+      "variableOrder": [],
+      "createdAt": "2025-10-29T00:03:27.000Z",
+      "updatedAt": "2025-10-29T00:03:35.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "690159f602b15bc7a48d1357",
+      "updatedByID": 1769813,
+      "name": "User wants skills and competencies",
+      "agentID": "6900447e2205eea1947ca385",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user wants to see skills and competencies.",
+      "variableOrder": [],
+      "createdAt": "2025-10-29T00:04:07.000Z",
+      "updatedAt": "2025-10-29T00:04:14.000Z"
+    },
+    {
+      "environmentID": "6900301cf30d3ce66977fc88",
+      "id": "69015aab02b15bc7a48d137d",
+      "updatedByID": 1769813,
+      "name": "End of journey",
+      "agentID": "6900447e2205eea1947ca385",
+      "assistantID": "6900301cf30d3ce66977fc87",
+      "description": "The user might want to return to the main menu. If not, end the flow here.",
+      "variableOrder": [],
+      "createdAt": "2025-10-29T00:07:08.000Z",
+      "updatedAt": "2025-10-29T00:08:02.000Z"
+    }
+  ],
+  "agentFunctionTools": [],
+  "agentIntegrationTools": [],
+  "agentPathToolVariables": [],
+  "agentMcpIntegrationTools": [],
+  "apiTools": [],
+  "apiToolInputVariables": [],
+  "integrationTools": [],
+  "functions": [],
+  "functionPaths": [],
+  "functionVariables": [],
+  "mcpServers": [],
+  "mcpServerTools": [],
+  "mcpIntegrationTools": [],
+  "project": {
+    "type": "chat",
+    "name": "NAB Virtual HR Assistant – Jason Davey Candidate Presentation",
+    "image": "",
+    "teamID": "LVkmdxdNE2",
+    "members": [],
+    "privacy": "private",
+    "platform": "webchat",
+    "_version": 1.2,
+    "linkType": "STRAIGHT",
+    "creatorID": 1769813,
+    "updatedBy": 1769813,
+    "apiPrivacy": "public",
+    "platformData": {
+      "invocationName": "template project general"
+    },
+    "customThemes": [],
+    "aiAssistSettings": {
+      "aiPlayground": true
+    },
+    "_id": "6900301cf30d3ce66977fc87",
+    "updatedAt": "2025-10-29T01:47:30.038Z",
+    "devVersion": "6900301cf30d3ce66977fc88",
+    "liveVersion": "6900301cf30d3ce66977fc89"
+  },
+  "_version": "1.2",
+  "secrets": [],
+  "variableStates": [],
+  "transcriptEvaluations": [
+    {
+      "name": "Deflection rate",
+      "default": true,
+      "description": null,
+      "type": "boolean",
+      "enabled": false,
+      "prompt": "Determine if the user requested to talk to a human in order to achieve their desired outcome.",
+      "settings": null,
+      "truePrompt": "The user did not require the need to talk to a human.",
+      "falsePrompt": "The user required the need to talk to a human agent."
+    },
+    {
+      "name": "Satisfaction score",
+      "default": true,
+      "description": null,
+      "type": "number",
+      "enabled": false,
+      "prompt": "Rate the user's overall satisfaction based on the conversation, using a scale from 1 to 5.",
+      "settings": null,
+      "minimumValue": 1,
+      "minimumPrompt": "Look for negative comments or expressions of dissatisfaction to rate the minimum satisfaction.",
+      "maximumValue": 5,
+      "maximumPrompt": "Identify any comments or phrases in the transcript that express the highest level of satisfaction."
+    },
+    {
+      "name": "AI summary",
+      "default": true,
+      "description": null,
+      "type": "string",
+      "enabled": false,
+      "prompt": "Look at the transcript and provide a brief summary of the conversation. Make sure to highlight the outcome of the conversation, and key moments or topics, and the overall tone of the customer.",
+      "settings": null
+    }
+  ]
+}

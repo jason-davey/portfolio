@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "react-pageflip": "^2.0.3",
+    "swiper": "^11.0.5",
+    "react-dropzone": "^14.2.3",
+    "@vercel/blob": "^0.20.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "pdfjs-dist": "^4.0.379",
+    "canvas": "^2.11.2",
+    "sharp": "^0.33.1",
+    "lucide-react": "^0.303.0"
+  },
+  "devDependencies": {
+    "@types/react-dropzone": "^5.1.0"
+  },
+  "scripts": {
+    "flipbook:install": "npm install react-pageflip swiper react-dropzone @vercel/blob @supabase/supabase-js pdfjs-dist canvas sharp lucide-react @types/react-dropzone",
+    "flipbook:setup": "echo 'Run the SQL migration in Supabase SQL Editor' && echo 'Add environment variables to .env.local'",
+    "flipbook:dev": "next dev"
+  },
+  "notes": {
+    "canvas": "Requires system dependencies: Cairo, Pango, libjpeg, libgif. On macOS: brew install pkg-config cairo pango libpng jpeg giflib librsvg",
+    "sharp": "Will auto-install correct binary for your platform. If issues, run: npm rebuild sharp",
+    "vercel-blob": "Requires BLOB_READ_WRITE_TOKEN from Vercel dashboard",
+    "supabase": "Requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY"
+  }
+}

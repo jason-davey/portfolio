@@ -1,0 +1,14 @@
+Job Tracker Pro - access keys
+
+#Notion integration:
+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
+
+
+#Database IDs:
+Job Opportunities: https://www.notion.so/2814c13c80218017a767d356974542cb?v=2814c13c80218043b429000c75fdfa30&source=copy_link
+
+Companies: https://www.notion.so/2814c13c8021808d8016cb2601e777c9?v=2814c13c802180ccaa41000c7f6434cd&source=copy_link
+
+Applications: https://www.notion.so/2814c13c802180aeaf93e85f2522707c?v=2814c13c802180a5ac72000ca7fc016e&source=copy_link
+
+Research & Reading: https://www.notion.so/2814c13c802180d4ab5dd3d9d09c115a?v=2814c13c80218090ad02000c98f8ae27&source=copy_link

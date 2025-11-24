@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Environment Globe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            overflow: hidden;
+        }
+
+        #globe-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .env-button {
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .env-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .env-button.active {
+            background: rgba(107, 142, 107, 0.8);
+            border-color: #6b8e6b;
+        }
+
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info h3 {
+            margin: 0 0 5px 0;
+            color: #6b8e6b;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: white;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="globe-container">
+        <div class="info">
+            <h3>Multi-Environment Globe</h3>
+            <p>5 rotating environments around central globe</p>
+        </div>
+        <div class="loading" id="loading">Loading environments...</div>
+
+        <div class="controls">
+            <button class="env-button active" data-env="0">🏢 Business</button>
+            <button class="env-button" data-env="1">🌲 Nature</button>
+            <button class="env-button" data-env="2">🏙️ City</button>
+            <button class="env-button" data-env="3">💻 Tech</button>
+            <button class="env-button" data-env="4">🏠 Home</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <script>
+        class MultiEnvironmentGlobe {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.globe = null;
+                this.environments = [];
+                this.animationId = null;
+                this.currentEnvironment = 0;
+                this.rotationSpeed = 0.003;
+
+                this.init();
+                this.createEnvironments();
+                this.setupControls();
+                this.animate();
+                this.setupResize();
+            }
+
+            init() {
+                // Scene setup
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0a0a0a);
+                this.scene.fog = new THREE.Fog(0x0a0a0a, 15, 25);
+
+                // Camera setup
+                const aspect = this.container.clientWidth / this.container.clientHeight;
+                this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+                this.camera.position.set(0, 3, 8);
+                this.camera.lookAt(0, 0, 0);
+
+                // Renderer setup
+                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.container.appendChild(this.renderer.domElement);
+
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                this.scene.add(ambientLight);
+
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+                mainLight.position.set(10, 10, 5);
+                mainLight.castShadow = true;
+                mainLight.shadow.mapSize.width = 2048;
+                mainLight.shadow.mapSize.height = 2048;
+                this.scene.add(mainLight);
+
+                // Create central globe
+                this.createCentralGlobe();
+            }
+
+            createCentralGlobe() {
+                const geometry = new THREE.SphereGeometry(1, 32, 16);
+                const material = new THREE.MeshLambertMaterial({
+                    color: 0x6b8e6b,
+                    emissive: 0x112211
+                });
+
+                this.globe = new THREE.Mesh(geometry, material);
+                this.globe.castShadow = true;
+                this.globe.receiveShadow = true;
+                this.scene.add(this.globe);
+            }
+
+            createEnvironments() {
+                const environmentConfigs = [
+                    { name: 'Business', color: 0x4a90e2, objects: this.createBusinessObjects },
+                    { name: 'Nature', color: 0x7ed321, objects: this.createNatureObjects },
+                    { name: 'City', color: 0xf5a623, objects: this.createCityObjects },
+                    { name: 'Tech', color: 0x9013fe, objects: this.createTechObjects },
+                    { name: 'Home', color: 0xff6b6b, objects: this.createHomeObjects }
+                ];
+
+                environmentConfigs.forEach((config, index) => {
+                    const envGroup = new THREE.Group();
+                    const angle = (index / 5) * Math.PI * 2;
+                    const radius = 6;
+
+                    envGroup.position.set(
+                        Math.cos(angle) * radius,
+                        0,
+                        Math.sin(angle) * radius
+                    );
+
+                    // Create objects for this environment
+                    const objects = config.objects.call(this, config.color);
+                    objects.forEach(obj => envGroup.add(obj));
+
+                    this.environments.push({
+                        group: envGroup,
+                        angle: angle,
+                        name: config.name,
+                        color: config.color
+                    });
+
+                    this.scene.add(envGroup);
+                });
+            }
+
+            createBusinessObjects(color) {
+                const objects = [];
+
+                // Office building
+                const buildingGeom = new THREE.BoxGeometry(1.5, 2.5, 1);
+                const buildingMat = new THREE.MeshLambertMaterial({ color: color });
+                const building = new THREE.Mesh(buildingGeom, buildingMat);
+                building.position.y = 1.25;
+                building.castShadow = true;
+                objects.push(building);
+
+                // Laptop
+                const laptopGeom = new THREE.BoxGeometry(0.8, 0.05, 0.6);
+                const laptopMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
+                const laptop = new THREE.Mesh(laptopGeom, laptopMat);
+                laptop.position.set(-1, 0.5, 0.5);
+                laptop.castShadow = true;
+                objects.push(laptop);
+
+                // Charts/Screens
+                for (let i = 0; i < 3; i++) {
+                    const chartGeom = new THREE.PlaneGeometry(0.3, 0.4);
+                    const chartMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color().setHSL(0.6, 0.8, 0.5 + i * 0.1)
+                    });
+                    const chart = new THREE.Mesh(chartGeom, chartMat);
+                    chart.position.set(0.5 + i * 0.2, 1.5 + i * 0.2, 0.8);
+                    chart.rotation.y = -0.3;
+                    objects.push(chart);
+                }
+
+                return objects;
+            }
+
+            createNatureObjects(color) {
+                const objects = [];
+
+                // Trees
+                for (let i = 0; i < 4; i++) {
+                    const treeGroup = new THREE.Group();
+
+                    // Trunk
+                    const trunkGeom = new THREE.CylinderGeometry(0.1, 0.15, 1.5);
+                    const trunkMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                    const trunk = new THREE.Mesh(trunkGeom, trunkMat);
+                    trunk.position.y = 0.75;
+                    treeGroup.add(trunk);
+
+                    // Leaves
+                    const leavesGeom = new THREE.SphereGeometry(0.6, 8, 6);
+                    const leavesMat = new THREE.MeshLambertMaterial({ color: color });
+                    const leaves = new THREE.Mesh(leavesGeom, leavesMat);
+                    leaves.position.y = 1.8;
+                    treeGroup.add(leaves);
+
+                    const angle = (i / 4) * Math.PI * 2;
+                    treeGroup.position.set(
+                        Math.cos(angle) * 1.5,
+                        0,
+                        Math.sin(angle) * 1.5
+                    );
+                    treeGroup.castShadow = true;
+                    objects.push(treeGroup);
+                }
+
+                // Mountains
+                const mountainGeom = new THREE.ConeGeometry(1, 2, 6);
+                const mountainMat = new THREE.MeshLambertMaterial({ color: 0x888888 });
+                const mountain = new THREE.Mesh(mountainGeom, mountainMat);
+                mountain.position.set(0, 1, -2);
+                mountain.castShadow = true;
+                objects.push(mountain);
+
+                return objects;
+            }
+
+            createCityObjects(color) {
+                const objects = [];
+
+                // Skyscrapers
+                for (let i = 0; i < 6; i++) {
+                    const height = 2 + Math.random() * 2;
+                    const buildingGeom = new THREE.BoxGeometry(0.6, height, 0.6);
+                    const buildingMat = new THREE.MeshLambertMaterial({
+                        color: new THREE.Color().setHSL(0.15, 0.7, 0.4 + Math.random() * 0.3)
+                    });
+                    const building = new THREE.Mesh(buildingGeom, buildingMat);
+
+                    const angle = (i / 6) * Math.PI * 2;
+                    building.position.set(
+                        Math.cos(angle) * 2,
+                        height / 2,
+                        Math.sin(angle) * 2
+                    );
+                    building.castShadow = true;
+                    objects.push(building);
+                }
+
+                // Roads
+                const roadGeom = new THREE.RingGeometry(1.5, 2.5, 16);
+                const roadMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
+                const road = new THREE.Mesh(roadGeom, roadMat);
+                road.rotation.x = -Math.PI / 2;
+                road.position.y = 0.01;
+                objects.push(road);
+
+                return objects;
+            }
+
+            createTechObjects(color) {
+                const objects = [];
+
+                // Server racks
+                for (let i = 0; i < 3; i++) {
+                    const serverGeom = new THREE.BoxGeometry(0.4, 2, 0.8);
+                    const serverMat = new THREE.MeshLambertMaterial({
+                        color: 0x222222,
+                        emissive: new THREE.Color(color).multiplyScalar(0.1)
+                    });
+                    const server = new THREE.Mesh(serverGeom, serverMat);
+                    server.position.set(-1 + i * 1, 1, 0);
+                    server.castShadow = true;
+                    objects.push(server);
+
+                    // LED strips
+                    const ledGeom = new THREE.BoxGeometry(0.35, 0.05, 0.1);
+                    const ledMat = new THREE.MeshLambertMaterial({
+                        color: color,
+                        emissive: new THREE.Color(color).multiplyScalar(0.5)
+                    });
+                    for (let j = 0; j < 4; j++) {
+                        const led = new THREE.Mesh(ledGeom, ledMat);
+                        led.position.set(-1 + i * 1, 0.5 + j * 0.4, 0.41);
+                        objects.push(led);
+                    }
+                }
+
+                // Data streams (floating cubes)
+                for (let i = 0; i < 8; i++) {
+                    const dataGeom = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+                    const dataMat = new THREE.MeshLambertMaterial({
+                        color: color,
+                        emissive: new THREE.Color(color).multiplyScalar(0.3)
+                    });
+                    const data = new THREE.Mesh(dataGeom, dataMat);
+                    data.position.set(
+                        (Math.random() - 0.5) * 4,
+                        Math.random() * 3 + 0.5,
+                        (Math.random() - 0.5) * 4
+                    );
+                    data.userData = {
+                        speed: 0.02 + Math.random() * 0.03,
+                        axis: Math.random() > 0.5 ? 'x' : 'z'
+                    };
+                    objects.push(data);
+                }
+
+                return objects;
+            }
+
+            createHomeObjects(color) {
+                const objects = [];
+
+                // House
+                const houseGeom = new THREE.BoxGeometry(2, 1.5, 1.5);
+                const houseMat = new THREE.MeshLambertMaterial({ color: 0xD2B48C });
+                const house = new THREE.Mesh(houseGeom, houseMat);
+                house.position.y = 0.75;
+                house.castShadow = true;
+                objects.push(house);
+
+                // Roof
+                const roofGeom = new THREE.ConeGeometry(1.5, 0.8, 4);
+                const roofMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                const roof = new THREE.Mesh(roofGeom, roofMat);
+                roof.position.y = 1.9;
+                roof.rotation.y = Math.PI / 4;
+                roof.castShadow = true;
+                objects.push(roof);
+
+                // Garden plants
+                for (let i = 0; i < 6; i++) {
+                    const plantGeom = new THREE.SphereGeometry(0.2, 6, 4);
+                    const plantMat = new THREE.MeshLambertMaterial({ color: color });
+                    const plant = new THREE.Mesh(plantGeom, plantMat);
+
+                    const angle = (i / 6) * Math.PI * 2;
+                    plant.position.set(
+                        Math.cos(angle) * 2.5,
+                        0.2,
+                        Math.sin(angle) * 2.5
+                    );
+                    objects.push(plant);
+                }
+
+                // Chimney
+                const chimneyGeom = new THREE.BoxGeometry(0.3, 0.8, 0.3);
+                const chimneyMat = new THREE.MeshLambertMaterial({ color: 0x654321 });
+                const chimney = new THREE.Mesh(chimneyGeom, chimneyMat);
+                chimney.position.set(0.6, 2.3, 0);
+                chimney.castShadow = true;
+                objects.push(chimney);
+
+                return objects;
+            }
+
+            setupControls() {
+                const buttons = document.querySelectorAll('.env-button');
+                buttons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        this.focusEnvironment(index);
+                        buttons.forEach(b => b.classList.remove('active'));
+                        button.classList.add('active');
+                    });
+                });
+            }
+
+            focusEnvironment(index) {
+                this.currentEnvironment = index;
+                // Optional: Add camera movement to focus on the environment
+            }
+
+            animate() {
+                this.animationId = requestAnimationFrame(() => this.animate());
+
+                // Rotate central globe
+                if (this.globe) {
+                    this.globe.rotation.y += 0.005;
+                }
+
+                // Rotate environments around globe
+                this.environments.forEach((env, index) => {
+                    env.group.rotation.y += this.rotationSpeed;
+
+                    // Update environment position in orbit
+                    const newAngle = env.angle + this.rotationSpeed * 0.3;
+                    env.angle = newAngle;
+                    const radius = 6;
+                    env.group.position.x = Math.cos(newAngle) * radius;
+                    env.group.position.z = Math.sin(newAngle) * radius;
+
+                    // Animate tech environment data streams
+                    if (index === 3) { // Tech environment
+                        env.group.children.forEach(child => {
+                            if (child.userData.speed) {
+                                if (child.userData.axis === 'x') {
+                                    child.rotation.x += child.userData.speed;
+                                } else {
+                                    child.rotation.z += child.userData.speed;
+                                }
+                            }
+                        });
+                    }
+                });
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            hideLoading() {
+                const loadingElement = document.getElementById('loading');
+                if (loadingElement) {
+                    loadingElement.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingElement.style.display = 'none';
+                    }, 500);
+                }
+            }
+
+            setupResize() {
+                window.addEventListener('resize', () => {
+                    const width = this.container.clientWidth;
+                    const height = this.container.clientHeight;
+
+                    this.camera.aspect = width / height;
+                    this.camera.updateProjectionMatrix();
+
+                    this.renderer.setSize(width, height);
+                    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                });
+            }
+
+            dispose() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+                // Cleanup code...
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const globe = new MultiEnvironmentGlobe('globe-container');
+                window.globeInstance = globe;
+
+                setTimeout(() => {
+                    globe.hideLoading();
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error initializing globe:', error);
+                document.getElementById('loading').textContent = 'Error loading globe.';
+            }
+        });
+    </script>
+</body>
+</html>

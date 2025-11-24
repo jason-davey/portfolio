@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinning Illustrated Globe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow: hidden;
+        }
+
+        #globe-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #globe-canvas {
+            width: 80vmin;
+            height: 80vmin;
+            max-width: 600px;
+            max-height: 600px;
+        }
+
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            color: #333;
+        }
+
+        .info h3 {
+            margin: 0 0 5px 0;
+            color: #6b8e6b;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #6b8e6b;
+        }
+
+        @media (max-width: 768px) {
+            .info {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                font-size: 12px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="globe-container">
+        <div id="globe-canvas"></div>
+        <div class="info">
+            <h3>Illustrated Spinning Globe</h3>
+            <p>Three.js implementation with custom vector-style world map</p>
+        </div>
+        <div class="loading" id="loading">Loading globe...</div>
+    </div>
+
+    <script type="module">
+        import { SpinningGlobe } from './globe.js';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingElement = document.getElementById('loading');
+
+            try {
+                // Initialize the globe
+                const globe = new SpinningGlobe('globe-canvas');
+
+                // Hide loading message after a short delay
+                setTimeout(() => {
+                    loadingElement.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingElement.style.display = 'none';
+                    }, 500);
+                }, 1000);
+
+            } catch (error) {
+                console.error('Error initializing globe:', error);
+                loadingElement.textContent = 'Error loading globe. Please check the console.';
+            }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (window.globeInstance) {
+                window.globeInstance.dispose();
+            }
+        });
+    </script>
+</body>
+</html>

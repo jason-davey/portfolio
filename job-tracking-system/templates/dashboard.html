@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Job Tracking System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+    <a href="{{ url_for('add_job') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add New Job
+    </a>
+</div>
+
+<!-- Stats Overview -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.total_jobs }}</h4>
+                        <p class="card-text">Total Jobs</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-briefcase fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.high_priority }}</h4>
+                        <p class="card-text">High Priority</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-star fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.applications_sent }}</h4>
+                        <p class="card-text">Applications Sent</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-paper-plane fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.interviews_scheduled }}</h4>
+                        <p class="card-text">Interviews</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top Scoring Jobs -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-trophy"></i> Top Scoring Opportunities</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_jobs %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>AI Score</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for job in recent_jobs %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url_for('job_detail', job_id=job.id) }}" class="text-decoration-none">
+                                            {{ job.title }}
+                                        </a>
+                                    </td>
+                                    <td>{{ job.company_name or 'Unknown' }}</td>
+                                    <td>
+                                        <span class="badge {{ job.ai_score|score_badge }} score-badge">
+                                            {{ job.ai_score or 0 }}/100
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ job.status }}</span>
+                                    </td>
+                                    <td>
+                                        {% if job.ai_score == 0 %}
+                                            <button class="btn btn-sm btn-outline-primary"
+                                                    onclick="scoreJob({{ job.id }})"
+                                                    id="score-btn-{{ job.id }}">
+                                                <i class="fas fa-calculator"></i> Score
+                                            </button>
+                                        {% else %}
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-sm btn-outline-success"
+                                                        onclick="generateCoverLetter({{ job.id }})"
+                                                        id="cover-letter-btn-{{ job.id }}"
+                                                        title="Generate Cover Letter">
+                                                    <i class="fas fa-file-alt"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-info"
+                                                        onclick="createApplicationPackage({{ job.id }})"
+                                                        id="package-btn-{{ job.id }}"
+                                                        title="Create Application Package">
+                                                    <i class="fas fa-folder"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary"
+                                                        onclick="syncToNotion({{ job.id }})"
+                                                        id="notion-sync-btn-{{ job.id }}"
+                                                        title="Sync to Notion">
+                                                    <i class="fas fa-sync"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ url_for('jobs_list') }}" class="btn btn-outline-primary">
+                            View All Jobs <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-briefcase fa-3x text-muted mb-3"></i>
+                        <h5>No jobs tracked yet</h5>
+                        <p class="text-muted">Start by adding your first job opportunity</p>
+                        <a href="{{ url_for('add_job') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add First Job
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-tasks"></i> Application Pipeline</h5>
+            </div>
+            <div class="card-body">
+                {% if pipeline %}
+                    {% for item in pipeline[:10] %}
+                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                            <div class="flex-grow-1">
+                                <div class="fw-bold">{{ item.company_name }}</div>
+                                <small class="text-muted">{{ item.title }}</small>
+                                {% if item.application_date %}
+                                    <div class="small text-success">
+                                        <i class="fas fa-check"></i> Applied {{ item.application_date|datetime }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="text-end">
+                                <span class="badge {{ item.priority|priority_badge }} mb-1">{{ item.priority }}</span>
+                                <br>
+                                <span class="badge {{ item.ai_score|score_badge }} score-badge">
+                                    {{ item.ai_score or 0 }}%
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-3">
+                        <i class="fas fa-clipboard-list fa-2x text-muted mb-2"></i>
+                        <p class="text-muted">No applications in pipeline</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="fas fa-bolt"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('add_job') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Job
+                    </a>
+                    <a href="{{ url_for('jobs_list') }}?min_score=80" class="btn btn-outline-success">
+                        <i class="fas fa-trophy"></i> High-Score Jobs
+                    </a>
+                    <a href="{{ url_for('applications_list') }}" class="btn btn-outline-info">
+                        <i class="fas fa-paper-plane"></i> View Applications
+                    </a>
+                    <a href="{{ url_for('analytics') }}" class="btn btn-outline-warning">
+                        <i class="fas fa-chart-line"></i> Analytics
+                    </a>
+                    <button onclick="syncFromNotion()" class="btn btn-outline-purple" id="notion-import-btn">
+                        <i class="fas fa-download"></i> Import from Notion
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Auto-refresh dashboard every 5 minutes
+    setTimeout(function() {
+        location.reload();
+    }, 5 * 60 * 1000);
+</script>
+{% endblock %}

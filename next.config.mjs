@@ -25,12 +25,14 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Handle canvas and PDF processing libraries (server-side only)
     if (isServer) {
-      // Mark native modules as external - Inngest runtime will provide these
-      config.externals.push('canvas', 'sharp', 'pdfjs-dist')
+      // Mark native modules and heavy dependencies as external
+      // Inngest runtime will provide these at execution time
+      config.externals.push('canvas', 'sharp', 'pdfjs-dist', 'pdfjs-dist/build/pdf.mjs')
     }
 
     // Handle PDF.js worker
     config.resolve.alias.canvas = false
+    config.resolve.alias['pdfjs-dist'] = false
 
     return config
   },

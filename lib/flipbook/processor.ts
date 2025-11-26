@@ -1,13 +1,18 @@
 /**
  * PDF Processing for Flipbook system
- * Converts PDF pages to images using pure JavaScript (no native dependencies)
+ * Converts PDF pages to WebP images using server-side rendering
  *
- * Uses pdf-lib for PDF manipulation - works on Vercel serverless functions
+ * Uses @napi-rs/canvas and pdfjs-dist for high-quality PDF rendering
  */
 
-import { PDFDocument } from 'pdf-lib'
+import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs'
+import { createCanvas } from '@napi-rs/canvas'
+import sharp from 'sharp'
 import { uploadPageImage, uploadThumbnail } from './storage-supabase'
 import { updateDocumentProgress, insertPages, publishDocument } from './db'
+
+// Configure PDF.js - disable worker for server-side rendering
+pdfjs.GlobalWorkerOptions.workerSrc = ''
 
 interface PageData {
   page_number: number
@@ -22,8 +27,8 @@ interface ProcessingOptions {
 }
 
 /**
- * Process a PDF file and convert pages to images
- * Note: This converts PDF pages to PNG using pdf-lib's built-in rendering
+ * Process a PDF file and convert pages to WebP images
+ * Uses server-side canvas rendering for high-quality output
  */
 export async function processPdfToImages(
   pdfUrl: string,
@@ -37,45 +42,65 @@ export async function processPdfToImages(
     const response = await fetch(pdfUrl)
     const pdfBytes = await response.arrayBuffer()
 
-    // Load PDF document
-    const pdfDoc = await PDFDocument.load(pdfBytes)
-    const totalPages = pdfDoc.getPageCount()
+    // Load PDF document with pdfjs
+    const loadingTask = pdfjs.getDocument({
+      data: pdfBytes,
+      useSystemFonts: true,
+    })
+    const pdfDoc = await loadingTask.promise
+    const totalPages = pdfDoc.numPages
     const pages: PageData[] = []
 
     console.log(`Processing ${totalPages} pages from PDF`)
 
     // Process each page
-    for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-      const pageNum = pageIndex + 1
+    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+      // Get the page
+      const page = await pdfDoc.getPage(pageNum)
+      const viewport = page.getViewport({ scale: 2.0 }) // 2x scale for better quality
 
-      // Create a new PDF with just this page
-      const singlePagePdf = await PDFDocument.create()
-      const [copiedPage] = await singlePagePdf.copyPages(pdfDoc, [pageIndex])
-      singlePagePdf.addPage(copiedPage)
-
-      // Get page dimensions
-      const page = pdfDoc.getPage(pageIndex)
-      let { width, height } = page.getSize()
+      // Calculate scaled dimensions
+      let width = viewport.width
+      let height = viewport.height
+      let scale = 2.0
 
       // Scale down if too wide
-      if (width > maxWidth) {
-        const scale = maxWidth / width
-        width = maxWidth
-        height = height * scale
+      if (width > maxWidth * 2) {
+        scale = (maxWidth * 2) / viewport.width
+        const scaledViewport = page.getViewport({ scale })
+        width = scaledViewport.width
+        height = scaledViewport.height
       }
 
-      // Save as PDF bytes (we'll convert to image on the client side for display)
-      const pdfPageBytes = await singlePagePdf.save()
-      const buffer = Buffer.from(pdfPageBytes)
+      // Create canvas with @napi-rs/canvas
+      const canvas = createCanvas(Math.round(width), Math.round(height))
+      const context = canvas.getContext('2d')
+
+      // Render PDF page to canvas
+      const renderContext = {
+        canvasContext: context,
+        viewport: page.getViewport({ scale }),
+        background: 'white',
+      }
+
+      await page.render(renderContext as any).promise
+
+      // Convert canvas to PNG buffer
+      const pngBuffer = await canvas.encode('png')
+
+      // Convert PNG to WebP using sharp for better compression
+      const webpBuffer = await sharp(pngBuffer)
+        .webp({ quality })
+        .toBuffer()
 
       // Upload to storage
-      const { url } = await uploadPageImage(buffer, documentId, pageNum)
+      const { url } = await uploadPageImage(webpBuffer, documentId, pageNum)
 
       pages.push({
         page_number: pageNum,
         image_url: url,
-        width: Math.round(width),
-        height: Math.round(height),
+        width: Math.round(width / 2), // Return original dimensions (not 2x)
+        height: Math.round(height / 2),
       })
 
       // Update progress
@@ -94,20 +119,27 @@ export async function processPdfToImages(
 
 /**
  * Generate thumbnail from first page
- * For now, we'll use the first page PDF as the thumbnail
+ * Resizes the first page image to create a thumbnail
  */
 export async function generateThumbnail(
   firstPageUrl: string,
   documentId: string
 ): Promise<string> {
   try {
-    // Fetch first page
+    // Fetch first page image
     const response = await fetch(firstPageUrl)
-    const buffer = Buffer.from(await response.arrayBuffer())
+    const imageBuffer = Buffer.from(await response.arrayBuffer())
 
-    // For now, just use the first page PDF as thumbnail
-    // The client will render it at thumbnail size
-    const thumbnailUrl = await uploadThumbnail(buffer, documentId)
+    // Resize to thumbnail size (300px wide) using sharp
+    const thumbnailBuffer = await sharp(imageBuffer)
+      .resize(300, null, {
+        fit: 'inside',
+        withoutEnlargement: true
+      })
+      .webp({ quality: 80 })
+      .toBuffer()
+
+    const thumbnailUrl = await uploadThumbnail(thumbnailBuffer, documentId)
 
     return thumbnailUrl
   } catch (error) {
@@ -163,8 +195,9 @@ export async function getPdfPageCount(pdfUrl: string): Promise<number> {
   try {
     const response = await fetch(pdfUrl)
     const pdfBytes = await response.arrayBuffer()
-    const pdfDoc = await PDFDocument.load(pdfBytes)
-    return pdfDoc.getPageCount()
+    const loadingTask = pdfjs.getDocument({ data: pdfBytes })
+    const pdfDoc = await loadingTask.promise
+    return pdfDoc.numPages
   } catch (error) {
     console.error('Failed to get page count:', error)
     return 0

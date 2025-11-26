@@ -236,7 +236,6 @@ export function FlipbookViewer({
                   alt={`Page ${page.page_number}`}
                   className="w-full h-full object-contain"
                   loading={index < 3 ? 'eager' : 'lazy'}
-                  draggable={false}
                 />
               </div>
             ))}

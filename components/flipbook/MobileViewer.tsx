@@ -10,10 +10,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Zoom, Keyboard } from 'swiper/modules'
 import { Share2, X } from 'lucide-react'
 
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/zoom'
-
 interface Page {
   page_number: number
   image_url: string
@@ -175,11 +171,18 @@ const mobileStyles = `
     padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
   }
 
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
   .swiper-slide {
     display: flex;
     align-items: center;
     justify-content: center;
     background: #000;
+    text-align: center;
+    font-size: 18px;
   }
 
   .swiper-pagination-fraction {
@@ -189,10 +192,21 @@ const mobileStyles = `
 
   .swiper-zoom-container {
     cursor: grab;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .swiper-zoom-container:active {
     cursor: grabbing;
+  }
+
+  .swiper-zoom-container > img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
   }
 `
 
